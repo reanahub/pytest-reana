@@ -48,6 +48,7 @@ setup_requires = [
 ]
 
 install_requires = [
+    'reana-commons>=0.3.1',
     'checksumdir>=1.1.4,<1.2',
     'click>=6.7,<7.0',
     'jsonschema>=2.6.0,<2.7',
