@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-# This file is part of reana-pytest-commons.
+# This file is part of REANA-Pytest-Commons.
 # Copyright (C) 2018 CERN.
 #
-# reana-pytest-commons is free software; you can redistribute it and/or modify
+# REANA-Pytest-Commons is free software; you can redistribute it and/or modify
 # it under the terms of the MIT License; see LICENSE file for more details.
 
-"""Version information for REANA-pytest-Commons.
+"""Version information for REANA-Pytest-Commons.
 
 This file is imported by ``reana_pytest_commons.__init__``
 and parsed by ``setup.py``.

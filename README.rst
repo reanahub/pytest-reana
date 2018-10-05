@@ -1,5 +1,5 @@
 ======================
- REANA-pytest-Commons
+ REANA-Pytest-Commons
 ======================
 
 .. image:: https://img.shields.io/pypi/pyversions/reana-pytest-commons.svg
@@ -23,7 +23,7 @@
 About
 -----
 
-REANA-pytest-Commons is a component of the `REANA <http://www.reana.io/>`_ reusable and
+REANA-Pytest-Commons is a component of the `REANA <http://www.reana.io/>`_ reusable and
 reproducible research data analysis platform. It provides pytest fixtures and
 test utilities.
 

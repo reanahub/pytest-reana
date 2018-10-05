@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-# This file is part of reana-pytest-commons.
+# This file is part of REANA-Pytest-Commons.
 # Copyright (C) 2018 CERN.
 #
-# reana-pytest-commons is free software; you can redistribute it and/or modify
+# REANA-Pytest-Commons is free software; you can redistribute it and/or modify
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -105,10 +105,10 @@ html_theme = 'alabaster'
 #
 html_theme_options = {
     'logo': 'logo-reana.png',
-    'description': """<p>REANA-pytest-Commons is a component of the <a
+    'description': """<p>REANA-Pytest-Commons is a component of the <a
                       href="http://www.reana.io">REANA</a> reusable and
                       reproducible research data analysis
-                      platform.</p><p>REANA-pytest-Commons provides pytest
+                      platform.</p><p>REANA-Pytest-Commons provides pytest
                       fixtures and test utilities..</p>""",
     'github_user': 'reanahub',
     'github_repo': 'reana-pytest-commons',
