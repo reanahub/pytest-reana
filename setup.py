@@ -53,7 +53,7 @@ install_requires = [
     'jsonschema>=2.6.0,<2.7',
     'mock>=2.0',
     'pika>=0.12.0,<0.13',
-    'reana-commons>=0.3.1',
+    'reana-commons>=0.4.0.dev20181011,<0.5.0',
 ]
 
 packages = find_packages()
