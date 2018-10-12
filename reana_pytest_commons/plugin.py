@@ -6,8 +6,6 @@
 # REANA is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
-"""Pytest configuration for REANA-Pytest-Commons."""
+"""Pytest plugin for REANA."""
 
-from __future__ import absolute_import, print_function
-
-pytest_plugins = ["pytester"]
+from .fixtures import tmp_shared_volume_path

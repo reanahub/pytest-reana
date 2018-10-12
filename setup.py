@@ -26,7 +26,6 @@ tests_require = [
     'pytest-cache>=1.0',
     'pytest-cov>=1.8.0',
     'pytest-pep8>=1.0.6',
-    'pytest>=2.8.0,<3.0.0'
 ]
 
 extras_require = {
@@ -53,7 +52,7 @@ install_requires = [
     'jsonschema>=2.6.0,<2.7',
     'mock>=2.0',
     'pika>=0.12.0,<0.13',
-    'reana-commons>=0.4.0.dev20181011,<0.5.0',
+    'pytest>=3.8.0,<4.0.0',
 ]
 
 packages = find_packages()
@@ -95,4 +94,9 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
+    entry_points={
+        'pytest11': [
+            'reana = reana_pytest_commons.plugin',
+        ]
+    }
 )
