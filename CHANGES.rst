@@ -1,8 +1,10 @@
 Changes
 =======
 
-VERSION FIXME
--------------
+Version 0.4.0 (XXXX-XX-XX)
+--------------------------
+
+- FIXME
 
 - Initial public release.
 
