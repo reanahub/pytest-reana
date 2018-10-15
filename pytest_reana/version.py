@@ -6,10 +6,12 @@
 # REANA is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
-"""REANA-Pytest-Commons."""
+"""Version information for pytest-REANA.
+
+This file is imported by ``pytest_reana.__init__``
+and parsed by ``setup.py``.
+"""
 
 from __future__ import absolute_import, print_function
 
-from .version import __version__
-
-__all__ = ('__version__', )
+__version__ = "0.4.0.dev20181012"

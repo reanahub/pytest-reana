@@ -61,7 +61,7 @@ packages = find_packages()
 
 
 # Get the version string. Cannot be done with import!
-with open(os.path.join('reana_pytest_commons',
+with open(os.path.join('pytest_reana',
                        'version.py'), 'rt') as f:
     version = re.search(
         '__version__\s*=\s*"(?P<version>.*)"\n',
@@ -69,14 +69,14 @@ with open(os.path.join('reana_pytest_commons',
     ).group('version')
 
 setup(
-    name='reana-pytest-commons',
+    name='pytest-reana',
     version=version,
     description=__doc__,
     long_description=readme + '\n\n' + history,
     author='REANA',
     author_email='info@reana.io',
-    url='https://github.com/reanahub/reana-pytest-commons',
-    packages=['reana_pytest_commons', ],
+    url='https://github.com/reanahub/pytest-reana',
+    packages=['pytest_reana', ],
     zip_safe=False,
     install_requires=install_requires,
     extras_require=extras_require,
@@ -98,7 +98,7 @@ setup(
     ],
     entry_points={
         'pytest11': [
-            'reana = reana_pytest_commons.plugin',
+            'reana = pytest_reana.plugin',
         ]
     }
 )

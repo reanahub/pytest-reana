@@ -13,5 +13,5 @@ from __future__ import absolute_import, print_function
 
 def test_version():
     """Test version import."""
-    from reana_pytest_commons import __version__
+    from pytest_reana import __version__
     assert __version__

@@ -13,7 +13,7 @@ include *.sh
 include *.yaml
 include pytest.ini
 prune docs/_build
-recursive-include reana_pytest_commons *.py
+recursive-include pytest_reana *.py
 recursive-include docs *.py
 recursive-include docs *.png
 recursive-include docs *.rst

@@ -66,7 +66,7 @@ author = 'info@reana.io'
 
 # Get the version string. Cannot be done with import!
 g = {}
-with open(os.path.join('..', 'reana_pytest_commons', 'version.py'), 'rt') as fp:
+with open(os.path.join('..', 'pytest_reana', 'version.py'), 'rt') as fp:
     exec(fp.read(), g)
     version = g['__version__']
 
@@ -105,13 +105,13 @@ html_theme = 'alabaster'
 #
 html_theme_options = {
     'logo': 'logo-reana.png',
-    'description': """<p>REANA-Pytest-Commons is a component of the <a
+    'description': """<p>pytest-REANA is a component of the <a
                       href="http://www.reana.io">REANA</a> reusable and
                       reproducible research data analysis
-                      platform.</p><p>REANA-Pytest-Commons provides pytest
+                      platform.</p><p>pytest-REANA provides pytest
                       fixtures and test utilities..</p>""",
     'github_user': 'reanahub',
-    'github_repo': 'reana-pytest-commons',
+    'github_repo': 'pytest-reana',
     'github_button': False,
     'github_banner': True,
     'show_powered_by': False,
