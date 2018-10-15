@@ -8,4 +8,7 @@
 
 """Pytest plugin for REANA."""
 
-from .fixtures import app, db_engine, session, tmp_shared_volume_path
+from .fixtures import (app, cwl_workflow_with_name, cwl_workflow_without_name,
+                       db_engine, default_user, session,
+                       tmp_shared_volume_path, yadage_workflow_with_name,
+                       yadage_workflow_without_name)

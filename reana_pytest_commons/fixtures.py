@@ -60,3 +60,61 @@ def app(base_app, db_engine, session):
         yield base_app
         for table in reversed(Base.metadata.sorted_tables):
             db_engine.execute(table.delete())
+
+
+@pytest.fixture()
+def default_user(app, session):
+    """Create users."""
+    default_user_id = '00000000-0000-0000-0000-000000000000'
+    user = User.query.filter_by(
+        id_=default_user_id).first()
+    if not user:
+        user = User(id_=default_user_id,
+                    email='info@reana.io', access_token='secretkey')
+        session.add(user)
+        session.commit()
+    return user
+
+
+@pytest.fixture()
+def cwl_workflow_with_name():
+    """CWL workflow with name."""
+    return {'parameters': {'min_year': '1991',
+                           'max_year': '2001'},
+            'specification': {'first': 'do this',
+                              'second': 'do that'},
+            'type': 'cwl',
+            'name': 'my_test_workflow'}
+
+
+@pytest.fixture()
+def yadage_workflow_with_name():
+    """Yadage workflow with name."""
+    return {'parameters': {'min_year': '1991',
+                           'max_year': '2001'},
+            'specification': {'first': 'do this',
+                              'second': 'do that'},
+            'type': 'yadage',
+            'name': 'my_test_workflow'}
+
+
+@pytest.fixture()
+def cwl_workflow_without_name():
+    """CWL workflow without name."""
+    return {'parameters': {'min_year': '1991',
+                           'max_year': '2001'},
+            'specification': {'first': 'do this',
+                              'second': 'do that'},
+            'type': 'cwl',
+            'name': ''}
+
+
+@pytest.fixture()
+def yadage_workflow_without_name():
+    """Yadage workflow without name."""
+    return {'parameters': {'min_year': '1991',
+                           'max_year': '2001'},
+            'specification': {'first': 'do this',
+                              'second': 'do that'},
+            'type': 'yadage',
+            'name': ''}
