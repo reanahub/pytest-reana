@@ -48,11 +48,12 @@ setup_requires = [
 
 install_requires = [
     'checksumdir>=1.1.4,<1.2',
-    'click>=6.7,<7.0',
+    'click>=7.0,<8.0',
     'jsonschema>=2.6.0,<2.7',
     'mock>=2.0',
     'pika>=0.12.0,<0.13',
     'pytest>=3.8.0,<4.0.0',
+    'reana-commons>=0.4.0.dev20181012,<0.5.0',
     'reana-db>=0.3.0,<0.4',
 ]
 
