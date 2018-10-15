@@ -8,4 +8,4 @@
 
 """Pytest plugin for REANA."""
 
-from .fixtures import tmp_shared_volume_path
+from .fixtures import app, db_engine, session, tmp_shared_volume_path

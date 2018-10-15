@@ -53,6 +53,7 @@ install_requires = [
     'mock>=2.0',
     'pika>=0.12.0,<0.13',
     'pytest>=3.8.0,<4.0.0',
+    'reana-db>=0.3.0,<0.4',
 ]
 
 packages = find_packages()
