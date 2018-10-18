@@ -54,7 +54,7 @@ install_requires = [
     'pika>=0.12.0,<0.13',
     'pytest>=3.8.0,<4.0.0',
     'reana-commons>=0.4.0.dev20181016,<0.5.0',
-    'reana-db>=0.3.0,<0.4',
+    'reana-db>=0.4.0.dev20181018,<0.5.0',
 ]
 
 packages = find_packages()
