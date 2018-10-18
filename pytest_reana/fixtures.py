@@ -167,13 +167,12 @@ def cwl_workflow_with_name():
         "reana_specification": {
             "parameters": {"min_year": "1991", "max_year": "2001"},
             "workflow": {
-                "spec": {
+                "specification": {
                     "first": "do this",
                     "second": "do that"
                 },
                 "type": "cwl",
             },
-            "specification": {},
             "type": "cwl",
         },
         "workflow_name": "my_test_workflow",
@@ -191,14 +190,13 @@ def yadage_workflow_with_name():
     return {
         "reana_specification": {
             "workflow": {
-                "spec": {
+                "specification": {
                     "first": "do this",
                     "second": "do that"
                 },
                 "type": "yadage",
             },
             "parameters": {"min_year": "1991", "max_year": "2001"},
-            "specification": {"first": "do this", "second": "do that"},
             "type": "yadage",
         },
         "name": "my_test_workflow",
@@ -217,13 +215,12 @@ def cwl_workflow_without_name():
         "reana_specification": {
             "parameters": {"min_year": "1991", "max_year": "2001"},
             "workflow": {
-                "spec": {
+                "specification": {
                     "first": "do this",
                     "second": "do that"
                 },
                 "type": "cwl",
             },
-            "specification": {},
             "type": "cwl",
         },
         "name": "",
@@ -241,14 +238,13 @@ def yadage_workflow_without_name():
     return {
         "reana_specification": {
             "workflow": {
-                "spec": {
+                "specification": {
                     "first": "do this",
                     "second": "do that"
                 },
                 "type": "yadage",
             },
             "parameters": {"min_year": "1991", "max_year": "2001"},
-            "specification": {"first": "do this", "second": "do that"},
             "type": "yadage",
         },
         "name": "",
