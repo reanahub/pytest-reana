@@ -81,46 +81,82 @@ def default_user(app, session):
 
 @pytest.fixture()
 def cwl_workflow_with_name():
-    """CWL workflow with name."""
-    return {'parameters': {'min_year': '1991',
-                           'max_year': '2001'},
-            'specification': {'first': 'do this',
-                              'second': 'do that'},
-            'type': 'cwl',
-            'name': 'my_test_workflow'}
+    """Return CWL workflow with name."""
+    return {
+        "reana_specification": {
+            "parameters": {"min_year": "1991", "max_year": "2001"},
+            "workflow": {
+                "spec": {
+                    "first": "do this",
+                    "second": "do that"
+                },
+                "type": "cwl",
+            },
+            "specification": {},
+            "type": "cwl",
+        },
+        "workflow_name": "my_test_workflow",
+    }
 
 
 @pytest.fixture()
 def yadage_workflow_with_name():
-    """Yadage workflow with name."""
-    return {'parameters': {'min_year': '1991',
-                           'max_year': '2001'},
-            'specification': {'first': 'do this',
-                              'second': 'do that'},
-            'type': 'yadage',
-            'name': 'my_test_workflow'}
+    """Return yadage workflow with name."""
+    return {
+        "reana_specification": {
+            "workflow": {
+                "spec": {
+                    "first": "do this",
+                    "second": "do that"
+                },
+                "type": "yadage",
+            },
+            "parameters": {"min_year": "1991", "max_year": "2001"},
+            "specification": {"first": "do this", "second": "do that"},
+            "type": "yadage",
+        },
+        "name": "my_test_workflow",
+    }
 
 
 @pytest.fixture()
 def cwl_workflow_without_name():
-    """CWL workflow without name."""
-    return {'parameters': {'min_year': '1991',
-                           'max_year': '2001'},
-            'specification': {'first': 'do this',
-                              'second': 'do that'},
-            'type': 'cwl',
-            'name': ''}
+    """Return CWL workflow without name."""
+    return {
+        "reana_specification": {
+            "parameters": {"min_year": "1991", "max_year": "2001"},
+            "workflow": {
+                "spec": {
+                    "first": "do this",
+                    "second": "do that"
+                },
+                "type": "cwl",
+            },
+            "specification": {},
+            "type": "cwl",
+        },
+        "name": "",
+    }
 
 
 @pytest.fixture()
 def yadage_workflow_without_name():
-    """Yadage workflow without name."""
-    return {'parameters': {'min_year': '1991',
-                           'max_year': '2001'},
-            'specification': {'first': 'do this',
-                              'second': 'do that'},
-            'type': 'yadage',
-            'name': ''}
+    """Return yadage workflow without name."""
+    return {
+        "reana_specification": {
+            "workflow": {
+                "spec": {
+                    "first": "do this",
+                    "second": "do that"
+                },
+                "type": "yadage",
+            },
+            "parameters": {"min_year": "1991", "max_year": "2001"},
+            "specification": {"first": "do this", "second": "do that"},
+            "type": "yadage",
+        },
+        "name": "",
+    }
 
 
 class _BaseConsumerTestIMPL(BaseConsumer):
