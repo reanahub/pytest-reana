@@ -9,6 +9,7 @@
    :numbered:
 
    introduction
+   api
    contributing
    changes
    license

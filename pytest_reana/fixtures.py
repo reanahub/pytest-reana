@@ -25,7 +25,24 @@ from sqlalchemy_utils import create_database, database_exists, drop_database
 
 @pytest.yield_fixture(scope='module')
 def tmp_shared_volume_path(tmpdir_factory):
-    """Fixture temporary file system database."""
+    """Fixture temporary file system database.
+
+    Scope: module
+
+    This fixture offers a temporary shared file system using
+    ``tmpdir_factory.mktemp`` named ``reana`` and when scoped is finished
+    it will be deleted.
+
+    .. code-block:: python
+
+        import os
+
+        def test_dir_exists(tmp_shared_volume_path):
+            path = os.path.join(
+                tmp_shared_volume_path, 'directory_path')
+            assert os.path.exists(path)
+
+    """
     temp_path = str(tmpdir_factory.mktemp('reana'))
     yield temp_path
     shutil.rmtree(temp_path)
@@ -33,7 +50,15 @@ def tmp_shared_volume_path(tmpdir_factory):
 
 @pytest.fixture(scope='module')
 def db_engine(base_app):
-    """Create a SQL Alchemy DB engine."""
+    """Create a SQL Alchemy DB engine.
+
+    Scope: module
+
+    This fixture offers a SQLAlchemy database engine and it expects a fixture
+    called ``base_app`` which should be a configured Flask application
+    including a ``SQLALCHEMY_DATABASE_URI`` configuration variable. When
+    finished it will delete the database.
+    """
     test_db_engine = create_engine(
         base_app.config['SQLALCHEMY_DATABASE_URI'])
     if not database_exists(test_db_engine.url):
@@ -44,7 +69,22 @@ def db_engine(base_app):
 
 @pytest.fixture()
 def session(db_engine):
-    """Create a SQL Alchemy session."""
+    """Create a SQL Alchemy session.
+
+    Scope: function
+
+    This fixture offers a SQLAlchemy session which has been created from the
+    ``db_engine`` fixture.
+
+    .. code-block:: python
+
+        from reana_db.models import Workflow
+
+        def test_create_workflow(session):
+            workflow = Workflow(...)
+            session.add(workflow)
+            session.commit()
+    """
     Session = scoped_session(sessionmaker(autocommit=False,
                                           autoflush=False,
                                           bind=db_engine))
@@ -56,7 +96,25 @@ def session(db_engine):
 
 @pytest.fixture()
 def app(base_app, db_engine, session):
-    """Flask application fixture."""
+    """Flask application fixture.
+
+    Scope: function
+
+    This fixture offers a Flask application with already a database connection
+    and all the models created. When finished it will delete all models.
+
+    .. code-block:: python
+
+        def create_ninja_turtle()
+            with app.test_client() as client:
+                somedata = 'ninja turtle'
+                res = client.post(url_for('api.create_object'),
+                                  content_type='application/json',
+                                  data=json.dumps(somedata))
+
+                assert res.status_code == 200
+
+    """
     with base_app.app_context():
         import reana_db.models
         Base.metadata.create_all(bind=db_engine)
@@ -67,7 +125,25 @@ def app(base_app, db_engine, session):
 
 @pytest.fixture()
 def default_user(app, session):
-    """Create users."""
+    """Create users.
+
+    Scope: function
+
+    This fixture creates an user with a default UUID
+    ``00000000-0000-0000-0000-000000000000``, ``email`` `info@reana.io`
+    and ``access_token`` ``secretkey`` and returns it.
+
+    .. code-block:: python
+
+        def test_default_user_exists(default)
+            with app.test_client() as client:
+                res = client.post(url_for('api.get_users'),
+                                  query_string={"user": default_user.id_})
+
+                assert res.status_code == 200
+
+
+    """
     default_user_id = '00000000-0000-0000-0000-000000000000'
     user = User.query.filter_by(
         id_=default_user_id).first()
@@ -81,7 +157,12 @@ def default_user(app, session):
 
 @pytest.fixture()
 def cwl_workflow_with_name():
-    """Return CWL workflow with name."""
+    """CWL workflow with name.
+
+    Scope: function
+
+    This fixture provides a ``CWL`` workflow with a name as a dictionary.
+    """
     return {
         "reana_specification": {
             "parameters": {"min_year": "1991", "max_year": "2001"},
@@ -101,7 +182,12 @@ def cwl_workflow_with_name():
 
 @pytest.fixture()
 def yadage_workflow_with_name():
-    """Return yadage workflow with name."""
+    """Yadage workflow with name.
+
+    Scope: function
+
+    This fixture provides a ``yadage`` workflow with a name as a dictionary.
+    """
     return {
         "reana_specification": {
             "workflow": {
@@ -121,7 +207,12 @@ def yadage_workflow_with_name():
 
 @pytest.fixture()
 def cwl_workflow_without_name():
-    """Return CWL workflow without name."""
+    """CWL workflow without name.
+
+    Scope: function
+
+    This fixture provides a ``CWL`` workflow without a name as a dictionary.
+    """
     return {
         "reana_specification": {
             "parameters": {"min_year": "1991", "max_year": "2001"},
@@ -141,7 +232,12 @@ def cwl_workflow_without_name():
 
 @pytest.fixture()
 def yadage_workflow_without_name():
-    """Return yadage workflow without name."""
+    """Yadage workflow without name.
+
+    Scope: function
+
+    This fixture provides a ``yadage`` workflow without name as a dictionary.
+    """
     return {
         "reana_specification": {
             "workflow": {
@@ -160,7 +256,12 @@ def yadage_workflow_without_name():
 
 
 class _BaseConsumerTestIMPL(BaseConsumer):
-    """Test implementation of a REANAConsumer class."""
+    """Test implementation of a REANAConsumer class.
+
+    This class is a basic implementation of a ``reana_commons.BaseConsumer``
+    to use while testing. There are fixtures wrapping it so it shouldn't
+    be used directly.
+    """
 
     def get_consumers(self, Consumer, channel):
         """Sample get consumers method."""
@@ -174,20 +275,61 @@ class _BaseConsumerTestIMPL(BaseConsumer):
 
 @pytest.fixture
 def ConsumerBase():
-    """Return a class implementing a BaseConsumer."""
+    """Return a class implementing a BaseConsumer.
+
+    Scope: function
+
+    This fixture offers a class which implements the
+    ``reana_commons.BaseConsumer``. It will just acknowledge the received
+    messages.
+    """
     return _BaseConsumerTestIMPL
 
 
 @pytest.fixture
 def ConsumerBaseOnMessageMock(ConsumerBase):
-    """Return a BaseConsumer class with ``on_message`` mocked."""
+    """Return a BaseConsumer class with ``on_message`` mocked.
+
+    Scope: function
+
+    This fixture offers a class which implements the
+    ``reana_commons.BaseConsumer``. Additionally to the ``ConsumerBase``
+    fixture, this class has an ``on_message`` mocked method so actions like
+    the following can be performed.
+
+    .. code-block:: python
+
+        def test_msg(ConsumerBaseOnMessageMock)
+            consumer = ConsumerBaseOnMessageMock()
+            # 1 message is published with message {'some': 'message'}
+            expected_body = {'some': 'message'}
+            consumer.on_message.assert_called_once_with(
+                expected, ANY)
+
+    """
     with patch.object(ConsumerBase, 'on_message'):
         yield ConsumerBase
 
 
 @pytest.fixture
 def consume_queue():
-    """Provide a callable to consume a queue."""
+    """Provide a callable to consume a queue.
+
+    Scope: function
+
+    This fixture offers a function which given a ``kombu.Consumer`` will
+    consume the messages in the queue until a certain ``limit``. If ``limit``
+    is not specified it will consume uninterruptedly.
+
+    .. code-block:: python
+
+        def test_consume_1_msg(ConsumerBase, consume_queue)
+            consumer = ConsumerBase()
+            # some message is published in the queue
+            # and we want to consume only one.
+            consume_queue(consumer, limit=1)
+
+    """
     def _consume_queue(consumer, limit=None):
         """Consume AMQP queue.
 
@@ -209,26 +351,64 @@ def consume_queue():
 
 @pytest.fixture(scope='session')
 def in_memory_queue_connection():
-    """In memory message queue."""
+    """In memory message queue.
+
+    Scope: session
+
+    This fixture offers an in memory :class:`kombu.Connection` scoped to the
+    testing session.
+
+    .. code-block:: python
+
+        def test_something(ConsumerBase, in_memory_queue_connection):
+            consumer = ConsumerBase(connection=in_memory_queue_connection)
+            # Now you have a consumer connected to an in memory queue
+
+
+    """
     return Connection('memory:///')
 
 
 @pytest.fixture
 def default_exchange():
-    """Return a default :class:`kombu.Exchange` created from configuration."""
+    """Return a default :class:`kombu.Exchange` created from configuration.
+
+    Scope: function
+
+    This fixture offers a default :class:`kombu.Exchange`.
+    """
     return Exchange('test-exchange', type='direct')
 
 
 @pytest.fixture
 def default_queue(default_exchange):
-    """Return a default :class:`kombu.Queue` created from configuration."""
+    """Return a default :class:`kombu.Queue` created from configuration.
+
+    Scope: function
+
+    This fixture offers a default :class:`kombu.Queue`.
+    """
     return Queue('test-queue', exchange=default_exchange,
                  routing_key='test-routing-key')
 
 
 @pytest.fixture
 def default_in_memory_producer(in_memory_queue_connection, default_exchange):
-    """Rerturn a :class:`kombu.Producer` connected to in memory queue."""
+    """Rerturn a :class:`kombu.Producer` connected to in memory queue.
+
+    Scope: function
+
+    This fixture offers a default :class:`kombu.Producer` instantiated using
+    the ``in_memory_queue_connection``.
+
+    .. code-block:: python
+
+        def test_publish_hello(default_in_memory_producer, default_queue):
+            msg = {'hello': 'ninja turtle'}
+            default_in_memory_producer.publish(msg,
+                                               declare=[default_queue])
+
+    """
     return in_memory_queue_connection.Producer(
         exchange=default_exchange,
         routing_key='test-routing-key',
