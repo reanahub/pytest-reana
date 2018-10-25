@@ -12,13 +12,14 @@ from __future__ import absolute_import, print_function
 
 import os
 import shutil
+from uuid import uuid4
 
 import pkg_resources
 import pytest
 from kombu import Connection, Exchange, Producer, Queue
 from mock import ANY, patch
 from reana_commons.consumer import BaseConsumer
-from reana_db.models import Base, User
+from reana_db.models import Base, User, Workflow
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy_utils import create_database, database_exists, drop_database
@@ -428,3 +429,30 @@ def sample_workflow_workspace(tmp_shared_volume_path):
     return shutil.copytree(test_workspace_path,
                            os.path.join(tmp_shared_volume_path,
                                         'test_workspace'))
+
+
+@pytest.fixture()
+def sample_yadage_workflow_in_db(app,
+                                 default_user,
+                                 session,
+                                 yadage_workflow_with_name):
+    """Create a sample workflow in the database.
+
+    Scope: function
+
+    Adds a sample serial workflow in the DB.
+    """
+    workflow = Workflow(id_=uuid4(),
+                        name='sample_serial_workflow_1',
+                        owner_id=default_user.id_,
+                        reana_specification=yadage_workflow_with_name[
+                            'reana_specification'],
+                        operational_parameters={},
+                        type_=yadage_workflow_with_name[
+                            'reana_specification']['workflow']['type'],
+                        logs='')
+    session.add(workflow)
+    session.commit()
+    yield workflow
+    session.delete(workflow)
+    session.commit()
