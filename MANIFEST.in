@@ -19,3 +19,5 @@ recursive-include docs *.png
 recursive-include docs *.rst
 recursive-include docs *.txt
 recursive-include tests *.py
+recursive-include tests *.csv
+recursive-include tests *.ipynb

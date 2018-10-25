@@ -13,6 +13,7 @@ from __future__ import absolute_import, print_function
 import os
 import shutil
 
+import pkg_resources
 import pytest
 from kombu import Connection, Exchange, Producer, Queue
 from mock import ANY, patch
@@ -409,3 +410,21 @@ def default_in_memory_producer(in_memory_queue_connection, default_exchange):
         exchange=default_exchange,
         routing_key='test-routing-key',
         serializer='json')
+
+
+@pytest.fixture(scope='module')
+def sample_workflow_workspace(tmp_shared_volume_path):
+    """Return the directory path of a sample workspace.
+
+    Scope: module
+
+    Creates a sample workspace in the shared volume path. Copies contents from
+    the ``tests/test_workspace`` directory.
+
+    """
+    test_workspace_path = pkg_resources.resource_filename(
+        'pytest_reana',
+        '../tests/test_workspace')
+    return shutil.copytree(test_workspace_path,
+                           os.path.join(tmp_shared_volume_path,
+                                        'test_workspace'))
