@@ -425,7 +425,7 @@ def sample_workflow_workspace(tmp_shared_volume_path):
     """
     test_workspace_path = pkg_resources.resource_filename(
         'pytest_reana',
-        '../tests/test_workspace')
+        'test_workspace')
     return shutil.copytree(test_workspace_path,
                            os.path.join(tmp_shared_volume_path,
                                         'test_workspace'))

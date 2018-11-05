@@ -14,10 +14,10 @@ include *.yaml
 include pytest.ini
 prune docs/_build
 recursive-include pytest_reana *.py
+recursive-include pytest_reana *.csv
+recursive-include pytest_reana *.ipynb
 recursive-include docs *.py
 recursive-include docs *.png
 recursive-include docs *.rst
 recursive-include docs *.txt
 recursive-include tests *.py
-recursive-include tests *.csv
-recursive-include tests *.ipynb
