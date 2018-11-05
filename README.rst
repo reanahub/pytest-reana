@@ -31,6 +31,11 @@ Features
 --------
 
 - pytest fixtures
+- mocking OpenAPI client with request format validation
+- mocking Advanced Message Queuing Protocol consumers and producers
+- mocking Celery tasks
+- mocking file system workspace access
+- mocking database access
 
 Useful links
 ------------

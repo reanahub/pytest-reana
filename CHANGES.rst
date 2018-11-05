@@ -1,10 +1,8 @@
 Changes
 =======
 
-Version 0.4.0 (XXXX-XX-XX)
+Version 0.4.0 (2018-11-06)
 --------------------------
-
-- FIXME
 
 - Initial public release.
 
