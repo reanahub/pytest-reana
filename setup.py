@@ -82,6 +82,7 @@ setup(
     extras_require=extras_require,
     setup_requires=setup_requires,
     tests_require=tests_require,
+    include_package_data=True,
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
