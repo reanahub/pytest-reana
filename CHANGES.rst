@@ -1,6 +1,11 @@
 Changes
 =======
 
+Version 0.4.1 (2018-11-06)
+--------------------------
+
+- Adds directory including sample workspace data.
+
 Version 0.4.0 (2018-11-06)
 --------------------------
 

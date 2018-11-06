@@ -36,6 +36,7 @@ Features
 - mocking Celery tasks
 - mocking file system workspace access
 - mocking database access
+- includes sample workspace directory
 
 Useful links
 ------------
