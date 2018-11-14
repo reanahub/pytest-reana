@@ -458,6 +458,7 @@ def sample_workflow_workspace(tmp_shared_volume_path):
                                         'test_workspace'))
 
 
+@pytest.fixture()
 def sample_yadage_workflow_in_db(app,
                                  default_user,
                                  session,

@@ -14,6 +14,7 @@ from .fixtures import (ConsumerBase, ConsumerBaseOnMessageMock, app,
                        cwl_workflow_without_name, db_engine, default_exchange,
                        default_in_memory_producer, default_queue, default_user,
                        in_memory_queue_connection,
-                       sample_serial_workflow_in_db, serial_workflow, session,
+                       sample_serial_workflow_in_db,
+                       sample_yadage_workflow_in_db, serial_workflow, session,
                        tmp_shared_volume_path, yadage_workflow_with_name,
                        yadage_workflow_without_name)
