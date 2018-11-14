@@ -158,6 +158,33 @@ def default_user(app, session):
 
 
 @pytest.fixture()
+def serial_workflow():
+    """Create a serial workflow.
+
+    Scope: function
+
+    This fixture provides a ``serial`` workflow.
+    """
+    return {
+        "reana_specification": {
+            "workflow": {
+                "specification": {
+                    "steps": [
+                        {
+                            "environment": "reanahub/reana-env-jupyter",
+                            "commands": [
+                                "echo 'Hello REANA'"
+                            ]
+                        }
+                    ]
+                },
+                "type": "serial",
+            },
+        },
+    }
+
+
+@pytest.fixture()
 def cwl_workflow_with_name():
     """CWL workflow with name.
 
@@ -431,7 +458,6 @@ def sample_workflow_workspace(tmp_shared_volume_path):
                                         'test_workspace'))
 
 
-@pytest.fixture()
 def sample_yadage_workflow_in_db(app,
                                  default_user,
                                  session,
@@ -440,7 +466,7 @@ def sample_yadage_workflow_in_db(app,
 
     Scope: function
 
-    Adds a sample serial workflow in the DB.
+    Adds a sample yadage workflow in the DB.
     """
     workflow = Workflow(id_=uuid4(),
                         name='sample_serial_workflow_1',
@@ -451,6 +477,29 @@ def sample_yadage_workflow_in_db(app,
                         type_=yadage_workflow_with_name[
                             'reana_specification']['workflow']['type'],
                         logs='')
+    session.add(workflow)
+    session.commit()
+    yield workflow
+    session.delete(workflow)
+    session.commit()
+
+
+@pytest.fixture()
+def sample_serial_workflow_in_db(app, default_user, session, serial_workflow):
+    """Create a sample workflow in the database.
+
+    Scope: function
+
+    Adds a sample serial workflow in the DB.
+    """
+    workflow = Workflow(
+        id_=uuid4(),
+        name='sample_serial_workflow_1',
+        owner_id=default_user.id_,
+        reana_specification=serial_workflow['reana_specification'],
+        operational_parameters={},
+        type_=serial_workflow['reana_specification']['workflow']['type'],
+        logs='')
     session.add(workflow)
     session.commit()
     yield workflow
