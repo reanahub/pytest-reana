@@ -447,7 +447,7 @@ def sample_yadage_workflow_in_db(app,
                         owner_id=default_user.id_,
                         reana_specification=yadage_workflow_with_name[
                             'reana_specification'],
-                        operational_parameters={},
+                        operational_options={},
                         type_=yadage_workflow_with_name[
                             'reana_specification']['workflow']['type'],
                         logs='')
