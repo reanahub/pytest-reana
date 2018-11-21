@@ -498,7 +498,7 @@ def sample_serial_workflow_in_db(app, default_user, session, serial_workflow):
         name='sample_serial_workflow_1',
         owner_id=default_user.id_,
         reana_specification=serial_workflow['reana_specification'],
-        operational_parameters={},
+        operational_options={},
         type_=serial_workflow['reana_specification']['workflow']['type'],
         logs='')
     session.add(workflow)
