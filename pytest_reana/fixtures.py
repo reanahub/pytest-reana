@@ -450,12 +450,22 @@ def sample_workflow_workspace(tmp_shared_volume_path):
     the ``tests/test_workspace`` directory.
 
     """
-    test_workspace_path = pkg_resources.resource_filename(
-        'pytest_reana',
-        'test_workspace')
-    return shutil.copytree(test_workspace_path,
-                           os.path.join(tmp_shared_volume_path,
-                                        'test_workspace'))
+    def _create_sample_workflow_workspace(workflow_id):
+        test_workspace_path = pkg_resources.resource_filename(
+            'pytest_reana',
+            'test_workspace')
+        sample_workspace_path = os.path.join(tmp_shared_volume_path,
+                                             str(workflow_id))
+        if not os.path.exists(sample_workspace_path):
+            shutil.copytree(test_workspace_path,
+                            sample_workspace_path)
+            yield sample_workspace_path
+            shutil.rmtree(test_workspace_path,
+                          sample_workspace_path)
+        else:
+            yield sample_workspace_path
+
+    return _create_sample_workflow_workspace
 
 
 @pytest.fixture()
