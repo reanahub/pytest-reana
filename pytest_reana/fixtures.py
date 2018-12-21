@@ -290,7 +290,7 @@ class _BaseConsumerTestIMPL(BaseConsumer):
 
     def get_consumers(self, Consumer, channel):
         """Sample get consumers method."""
-        return [Consumer(queues=self.queues, callbacks=[self.on_message],
+        return [Consumer(queue=self.queue, callbacks=[self.on_message],
                          accept=[self.message_default_format])]
 
     def on_message(self, body, message):
