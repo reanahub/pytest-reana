@@ -290,7 +290,7 @@ class _BaseConsumerTestIMPL(BaseConsumer):
 
     def get_consumers(self, Consumer, channel):
         """Sample get consumers method."""
-        return [Consumer(queue=self.queue, callbacks=[self.on_message],
+        return [Consumer(self.queue, callbacks=[self.on_message],
                          accept=[self.message_default_format])]
 
     def on_message(self, body, message):
@@ -516,3 +516,13 @@ def sample_serial_workflow_in_db(app, default_user, session, serial_workflow):
     yield workflow
     session.delete(workflow)
     session.commit()
+
+
+def sample_condition_for_starting_queued_workflows():
+    """Sample always true condition."""
+    return True
+
+
+def sample_condition_for_requeueing_workflows():
+    """Sample always false condition."""
+    return False
