@@ -94,6 +94,7 @@ def session(db_engine):
     from reana_db.database import Session as _Session
     _Session.configure(bind=db_engine)
     yield Session
+    Session.close_all_sessions()
 
 
 @pytest.fixture()
