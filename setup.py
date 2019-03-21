@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of REANA.
-# Copyright (C) 2018 CERN.
+# Copyright (C) 2018, 2019 CERN.
 #
 # REANA is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -53,8 +53,8 @@ install_requires = [
     'mock>=2.0',
     'pika>=0.12.0,<0.13',
     'pytest>=3.8.0,<4.0.0',
-    'reana-commons>=0.4.0.dev20181105',
-    'reana-db>=0.4.0.dev20181018',
+    'reana-commons>=0.5.0.dev20190314',
+    'reana-db>=0.5.0.dev20190314',
 ]
 
 packages = find_packages()
