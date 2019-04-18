@@ -8,7 +8,7 @@
 .. image:: https://img.shields.io/travis/reanahub/pytest-reana.svg
       :target: https://travis-ci.org/reanahub/pytest-reana
 
-.. image:: https://readthedocs.org/projects/docs/badge/?version=latest
+.. image:: https://readthedocs.org/projects/pytest-reana/badge/?version=latest
       :target: https://pytest-reana.readthedocs.io/en/latest/?badge=latest
 
 .. image:: https://img.shields.io/coveralls/reanahub/pytest-reana.svg
