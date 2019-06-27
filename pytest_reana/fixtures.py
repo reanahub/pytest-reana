@@ -10,6 +10,8 @@
 
 from __future__ import absolute_import, print_function
 
+import base64
+import json
 import os
 import shutil
 from uuid import uuid4
@@ -17,7 +19,8 @@ from uuid import uuid4
 import pkg_resources
 import pytest
 from kombu import Connection, Exchange, Producer, Queue
-from mock import ANY, patch
+from kubernetes import client
+from mock import ANY, Mock, patch
 from reana_commons.consumer import BaseConsumer
 from reana_db.models import Base, User, Workflow
 from sqlalchemy import create_engine
@@ -527,3 +530,59 @@ def sample_condition_for_starting_queued_workflows():
 def sample_condition_for_requeueing_workflows():
     """Sample always false condition."""
     return False
+
+
+@pytest.fixture
+def user_secrets():
+    """Test user secrets dictionary."""
+    keytab_file = base64.b64encode(b'keytab file.')
+    user_secrets = {
+        "username": {"value": "reanauser",
+                     "type": "env"},
+        "password": {"value": "1232456",
+                     "type": "env"},
+        ".keytab": {"value": keytab_file,
+                    "type": "file"}
+    }
+    return user_secrets
+
+
+@pytest.fixture
+def empty_user_secrets():
+    """Empty user secrets dictionary."""
+    return {}
+
+
+@pytest.fixture
+def corev1_api_client_with_user_secrets(default_user):
+    """Kubernetes CoreV1 api client with user secrets in K8s secret store.
+
+    Scope: function
+
+    Adds the CoreV1APIClient with example user secrets.
+    """
+    def make_corev1_api_client_with_user_secrets(user_secrets):
+        """Callable to return.
+
+        Should be used with one of the secret store fixtures.
+        """
+        corev1_api_client = Mock()
+        metadata = client.V1ObjectMeta(name=str(default_user.id_))
+        metadata.annotations = {'secrets_types': '{}'}
+        user_secrets_values = {}
+        secrets_types = {}
+        for secret_name in user_secrets:
+            # Add type metadata to secret store
+            secrets_types[secret_name] = \
+                user_secrets[secret_name]['type']
+            user_secrets_values[secret_name] = \
+                user_secrets[secret_name]['value']
+        metadata.annotations['secrets_types'] = json.dumps(secrets_types)
+        k8s_secrets_store = client.V1Secret(
+            api_version="v1",
+            metadata=metadata,
+            data=user_secrets_values)
+        corev1_api_client.read_namespaced_secret = \
+            lambda name, namespace: k8s_secrets_store
+        return corev1_api_client
+    return make_corev1_api_client_with_user_secrets

@@ -53,7 +53,7 @@ install_requires = [
     'mock>=2.0',
     'pika>=0.12.0,<0.13',
     'pytest>=3.8.0',
-    'reana-commons>=0.5.0.dev20190416',
+    'reana-commons[kubernetes]>=0.5.0.dev20190416',
     'reana-db>=0.5.0.dev20190416',
 ]
 
