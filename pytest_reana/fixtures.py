@@ -533,6 +533,14 @@ def sample_condition_for_requeueing_workflows():
 
 
 @pytest.fixture
+def no_db_user():
+    """Mock user created without using db."""
+    user = Mock()
+    user.id_ = uuid4()
+    return user
+
+
+@pytest.fixture
 def user_secrets():
     """Test user secrets dictionary."""
     keytab_file = base64.b64encode(b'keytab file.')
@@ -554,7 +562,7 @@ def empty_user_secrets():
 
 
 @pytest.fixture
-def corev1_api_client_with_user_secrets(default_user):
+def corev1_api_client_with_user_secrets(no_db_user):
     """Kubernetes CoreV1 api client with user secrets in K8s secret store.
 
     Scope: function
@@ -567,7 +575,7 @@ def corev1_api_client_with_user_secrets(default_user):
         Should be used with one of the secret store fixtures.
         """
         corev1_api_client = Mock()
-        metadata = client.V1ObjectMeta(name=str(default_user.id_))
+        metadata = client.V1ObjectMeta(name=str(no_db_user.id_))
         metadata.annotations = {'secrets_types': '{}'}
         user_secrets_values = {}
         secrets_types = {}
