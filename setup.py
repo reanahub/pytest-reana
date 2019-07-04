@@ -18,26 +18,11 @@ from setuptools import find_packages, setup
 readme = open('README.rst').read()
 history = open('CHANGES.rst').read()
 
-tests_require = [
-    'apispec>=0.21.0,<0.40',
-    'check-manifest>=0.25',
-    'coverage>=4.0',
-    'isort>=4.3.21,<4.4',
-    'mock>=2.0',
-    'pydocstyle>=1.0.0',
-    'pytest-cache>=1.0',
-    'pytest-cov>=1.8.0',
-    'pytest-pep8>=1.0.6',
-    'pytest>=3.8.0,<5.0.0',
-    'swagger_spec_validator>=2.1.0',
-]
-
 extras_require = {
     'docs': [
         'Sphinx>=1.4.4',
         'sphinx-rtd-theme>=0.1.9',
     ],
-    'tests': tests_require,
 }
 
 extras_require['all'] = []
@@ -51,14 +36,24 @@ setup_requires = [
 ]
 
 install_requires = [
+    'apispec>=0.21.0,<0.40',
+    'check-manifest>=0.25',
     'checksumdir>=1.1.4,<1.2',
     'click>=7.0',
+    'coverage>=4.0',
+    'isort>=4.3.21,<4.4',
     'jsonschema>=2.6.0',
+    'mock>=2.0',
     'pika>=0.12.0,<0.13',
+    'pydocstyle>=1.0.0',
+    'pytest-cache>=1.0',
+    'pytest-cov>=1.8.0',
+    'pytest-pep8>=1.0.6',
+    'pytest>=3.8.0,<5.0.0',
     'reana-commons[kubernetes]>=0.5.0.dev20190416',
     'reana-db>=0.5.0.dev20190416',
-] + tests_require
-
+    'swagger_spec_validator>=2.1.0',
+]
 packages = find_packages()
 
 
@@ -83,7 +78,6 @@ setup(
     install_requires=install_requires,
     extras_require=extras_require,
     setup_requires=setup_requires,
-    tests_require=tests_require,
     include_package_data=True,
     classifiers=[
         'Development Status :: 3 - Alpha',
