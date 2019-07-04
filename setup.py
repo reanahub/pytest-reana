@@ -19,13 +19,17 @@ readme = open('README.rst').read()
 history = open('CHANGES.rst').read()
 
 tests_require = [
+    'apispec>=0.21.0,<0.40',
     'check-manifest>=0.25',
     'coverage>=4.0',
-    'isort>=4.2.2',
+    'isort>=4.3.21,<4.4',
+    'mock>=2.0',
     'pydocstyle>=1.0.0',
     'pytest-cache>=1.0',
     'pytest-cov>=1.8.0',
     'pytest-pep8>=1.0.6',
+    'pytest>=3.8.0,<5.0.0',
+    'swagger_spec_validator>=2.1.0',
 ]
 
 extras_require = {
@@ -50,12 +54,10 @@ install_requires = [
     'checksumdir>=1.1.4,<1.2',
     'click>=7.0',
     'jsonschema>=2.6.0',
-    'mock>=2.0',
     'pika>=0.12.0,<0.13',
-    'pytest>=3.8.0,<5.0.0',
     'reana-commons[kubernetes]>=0.5.0.dev20190416',
     'reana-db>=0.5.0.dev20190416',
-]
+] + tests_require
 
 packages = find_packages()
 
