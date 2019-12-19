@@ -1,6 +1,13 @@
 Changes
 =======
 
+Version 0.6.0 (2019-12-19)
+--------------------------
+
+- Adds fixtures for secrets store.
+- Centralises test requirements.
+- Adds Python 3.8 support.
+
 Version 0.5.0 (2019-04-16)
 --------------------------
 
