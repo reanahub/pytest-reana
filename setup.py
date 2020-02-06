@@ -37,22 +37,22 @@ setup_requires = [
 
 install_requires = [
     'apispec>=0.21.0,<0.40',
-    'check-manifest>=0.25',
+    'check-manifest>=0.25,<1',
     'checksumdir>=1.1.4,<1.2',
     'click>=7.0',
-    'coverage>=4.0',
+    'coverage>=5.0,<6.0',
     'isort>=4.3.21,<4.4',
-    'jsonschema>=2.6.0',
-    'mock>=2.0',
+    'jsonschema>=3.2.0,<4.0',
+    'mock>=3.0,<4.0',
     'pika>=0.12.0,<0.13',
-    'pydocstyle>=1.0.0',
-    'pytest-cache>=1.0',
-    'pytest-cov>=1.8.0',
-    'pytest-pep8>=1.0.6',
+    'pydocstyle>=5.0.0,<6.0.0',
+    'pytest-cache>=1.0,<2.0',
+    'pytest-cov>=2.8.0,<3.0',
+    'pytest-pep8>=1.0.6,<2.0',
     'pytest>=3.8.0,<5.0.0',
-    'reana-commons[kubernetes]>=0.6.0.dev20191212',
-    'reana-db>=0.6.0.dev20191213',
-    'swagger_spec_validator>=2.1.0',
+    'reana-commons[kubernetes]>=0.7.0.dev20200203',
+    'reana-db>=0.7.0.dev20200206',
+    'swagger_spec_validator>=2.1.0,<3.0',
 ]
 packages = find_packages()
 
