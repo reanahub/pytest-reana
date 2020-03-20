@@ -198,7 +198,7 @@ def cwl_workflow_with_name():
     """
     return {
         "reana_specification": {
-            "parameters": {"min_year": "1991", "max_year": "2001"},
+            "inputs": {"parameters": {"min_year": "1991", "max_year": "2001"}},
             "workflow": {
                 "specification": {
                     "first": "do this",
@@ -229,7 +229,7 @@ def yadage_workflow_with_name():
                 },
                 "type": "yadage",
             },
-            "parameters": {"min_year": "1991", "max_year": "2001"},
+            "inputs": {"parameters": {"min_year": "1991", "max_year": "2001"}},
             "type": "yadage",
         },
         "name": "my_test_workflow",
@@ -246,7 +246,7 @@ def cwl_workflow_without_name():
     """
     return {
         "reana_specification": {
-            "parameters": {"min_year": "1991", "max_year": "2001"},
+            "inputs": {"parameters": {"min_year": "1991", "max_year": "2001"}},
             "workflow": {
                 "specification": {
                     "first": "do this",
@@ -277,7 +277,7 @@ def yadage_workflow_without_name():
                 },
                 "type": "yadage",
             },
-            "parameters": {"min_year": "1991", "max_year": "2001"},
+            "inputs": {"parameters": {"min_year": "1991", "max_year": "2001"}},
             "type": "yadage",
         },
         "name": "",
