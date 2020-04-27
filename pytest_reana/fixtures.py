@@ -151,11 +151,11 @@ def default_user(app, session):
 
     """
     default_user_id = '00000000-0000-0000-0000-000000000000'
-    user = User.query.filter_by(
-        id_=default_user_id).first()
+    user = User.query.filter_by(id_=default_user_id).first()
     if not user:
-        user = User(id_=default_user_id,
-                    email='info@reana.io', access_token='secretkey')
+        with patch('reana_db.database.Session', return_value=session):
+            user = User(id_=default_user_id, email='info@reana.io',
+                        access_token='secretkey')
         session.add(user)
         session.commit()
     return user
