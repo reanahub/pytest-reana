@@ -54,7 +54,7 @@ def tmp_shared_volume_path(tmpdir_factory):
 
 
 @pytest.fixture(scope='module')
-def db_engine(base_app):
+def db_engine():
     """Create a SQL Alchemy DB engine.
 
     Scope: module
@@ -64,12 +64,9 @@ def db_engine(base_app):
     including a ``SQLALCHEMY_DATABASE_URI`` configuration variable. When
     finished it will delete the database.
     """
-    test_db_engine = create_engine(
-        base_app.config['SQLALCHEMY_DATABASE_URI'])
-    if not database_exists(test_db_engine.url):
-        create_database(test_db_engine.url)
-    yield test_db_engine
-    drop_database(test_db_engine.url)
+    from reana_db.database import engine
+    yield engine
+    drop_database(engine.url)
 
 
 @pytest.fixture()
@@ -90,18 +87,13 @@ def session(db_engine):
             session.add(workflow)
             session.commit()
     """
-    Session = scoped_session(sessionmaker(autocommit=False,
-                                          autoflush=False,
-                                          bind=db_engine))
-    Base.query = Session.query_property()
-    from reana_db.database import Session as _Session
-    _Session.configure(bind=db_engine)
+    from reana_db.database import Session
     yield Session
     Session.close()
 
 
 @pytest.fixture()
-def app(base_app, db_engine, session):
+def app(base_app, db_engine):
     """Flask application fixture.
 
     Scope: function
@@ -122,11 +114,8 @@ def app(base_app, db_engine, session):
 
     """
     with base_app.app_context():
-        import reana_db.models
         Base.metadata.create_all(bind=db_engine)
         yield base_app
-        for table in reversed(Base.metadata.sorted_tables):
-            db_engine.execute(table.delete())
 
 
 @pytest.fixture()
