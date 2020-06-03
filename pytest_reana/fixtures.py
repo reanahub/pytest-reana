@@ -53,24 +53,8 @@ def tmp_shared_volume_path(tmpdir_factory):
     shutil.rmtree(temp_path)
 
 
-@pytest.fixture(scope='module')
-def db_engine():
-    """Create a SQL Alchemy DB engine.
-
-    Scope: module
-
-    This fixture offers a SQLAlchemy database engine and it expects a fixture
-    called ``base_app`` which should be a configured Flask application
-    including a ``SQLALCHEMY_DATABASE_URI`` configuration variable. When
-    finished it will delete the database.
-    """
-    from reana_db.database import engine
-    yield engine
-    drop_database(engine.url)
-
-
 @pytest.fixture()
-def session(db_engine):
+def session():
     """Create a SQL Alchemy session.
 
     Scope: function
@@ -93,7 +77,7 @@ def session(db_engine):
 
 
 @pytest.fixture()
-def app(base_app, db_engine):
+def app(base_app):
     """Flask application fixture.
 
     Scope: function
@@ -113,9 +97,14 @@ def app(base_app, db_engine):
                 assert res.status_code == 200
 
     """
+    engine = create_engine(base_app.config['SQLALCHEMY_DATABASE_URI'])
+    base_app.session.bind = engine
     with base_app.app_context():
-        Base.metadata.create_all(bind=db_engine)
+        if not database_exists(engine.url):
+            create_database(engine.url)
+        Base.metadata.create_all(bind=engine)
         yield base_app
+        drop_database(engine.url)
 
 
 @pytest.fixture()
