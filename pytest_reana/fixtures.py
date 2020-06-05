@@ -28,7 +28,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy_utils import create_database, database_exists, drop_database
 
 
-@pytest.yield_fixture(scope='module')
+@pytest.yield_fixture(scope="module")
 def tmp_shared_volume_path(tmpdir_factory):
     """Fixture temporary file system database.
 
@@ -48,7 +48,7 @@ def tmp_shared_volume_path(tmpdir_factory):
             assert os.path.exists(path)
 
     """
-    temp_path = str(tmpdir_factory.mktemp('reana'))
+    temp_path = str(tmpdir_factory.mktemp("reana"))
     yield temp_path
     shutil.rmtree(temp_path)
 
@@ -72,6 +72,7 @@ def session():
             session.commit()
     """
     from reana_db.database import Session
+
     yield Session
     Session.close()
 
@@ -97,7 +98,7 @@ def app(base_app):
                 assert res.status_code == 200
 
     """
-    engine = create_engine(base_app.config['SQLALCHEMY_DATABASE_URI'])
+    engine = create_engine(base_app.config["SQLALCHEMY_DATABASE_URI"])
     base_app.session.bind = engine
     with base_app.app_context():
         if not database_exists(engine.url):
@@ -128,12 +129,13 @@ def default_user(app, session):
 
 
     """
-    default_user_id = '00000000-0000-0000-0000-000000000000'
+    default_user_id = "00000000-0000-0000-0000-000000000000"
     user = User.query.filter_by(id_=default_user_id).first()
     if not user:
-        with patch('reana_db.database.Session', return_value=session):
-            user = User(id_=default_user_id, email='info@reana.io',
-                        access_token='secretkey')
+        with patch("reana_db.database.Session", return_value=session):
+            user = User(
+                id_=default_user_id, email="info@reana.io", access_token="secretkey"
+            )
         session.add(user)
         session.commit()
     return user
@@ -154,9 +156,7 @@ def serial_workflow():
                     "steps": [
                         {
                             "environment": "reanahub/reana-env-jupyter",
-                            "commands": [
-                                "echo 'Hello REANA'"
-                            ]
+                            "commands": ["echo 'Hello REANA'"],
                         }
                     ]
                 },
@@ -178,10 +178,7 @@ def cwl_workflow_with_name():
         "reana_specification": {
             "inputs": {"parameters": {"min_year": "1991", "max_year": "2001"}},
             "workflow": {
-                "specification": {
-                    "first": "do this",
-                    "second": "do that"
-                },
+                "specification": {"first": "do this", "second": "do that"},
                 "type": "cwl",
             },
             "type": "cwl",
@@ -201,10 +198,7 @@ def yadage_workflow_with_name():
     return {
         "reana_specification": {
             "workflow": {
-                "specification": {
-                    "first": "do this",
-                    "second": "do that"
-                },
+                "specification": {"first": "do this", "second": "do that"},
                 "type": "yadage",
             },
             "inputs": {"parameters": {"min_year": "1991", "max_year": "2001"}},
@@ -226,10 +220,7 @@ def cwl_workflow_without_name():
         "reana_specification": {
             "inputs": {"parameters": {"min_year": "1991", "max_year": "2001"}},
             "workflow": {
-                "specification": {
-                    "first": "do this",
-                    "second": "do that"
-                },
+                "specification": {"first": "do this", "second": "do that"},
                 "type": "cwl",
             },
             "type": "cwl",
@@ -249,10 +240,7 @@ def yadage_workflow_without_name():
     return {
         "reana_specification": {
             "workflow": {
-                "specification": {
-                    "first": "do this",
-                    "second": "do that"
-                },
+                "specification": {"first": "do this", "second": "do that"},
                 "type": "yadage",
             },
             "inputs": {"parameters": {"min_year": "1991", "max_year": "2001"}},
@@ -272,8 +260,13 @@ class _BaseConsumerTestIMPL(BaseConsumer):
 
     def get_consumers(self, Consumer, channel):
         """Sample get consumers method."""
-        return [Consumer(self.queue, callbacks=[self.on_message],
-                         accept=[self.message_default_format])]
+        return [
+            Consumer(
+                self.queue,
+                callbacks=[self.on_message],
+                accept=[self.message_default_format],
+            )
+        ]
 
     def on_message(self, body, message):
         """Sample on message method."""
@@ -314,7 +307,7 @@ def ConsumerBaseOnMessageMock(ConsumerBase):
                 expected, ANY)
 
     """
-    with patch.object(ConsumerBase, 'on_message'):
+    with patch.object(ConsumerBase, "on_message"):
         yield ConsumerBase
 
 
@@ -337,6 +330,7 @@ def consume_queue():
             consume_queue(consumer, limit=1)
 
     """
+
     def _consume_queue(consumer, limit=None):
         """Consume AMQP queue.
 
@@ -356,7 +350,7 @@ def consume_queue():
     return _consume_queue
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def in_memory_queue_connection():
     """In memory message queue.
 
@@ -373,7 +367,7 @@ def in_memory_queue_connection():
 
 
     """
-    return Connection('memory:///')
+    return Connection("memory:///")
 
 
 @pytest.fixture
@@ -384,7 +378,7 @@ def default_exchange():
 
     This fixture offers a default :class:`kombu.Exchange`.
     """
-    return Exchange('test-exchange', type='direct')
+    return Exchange("test-exchange", type="direct")
 
 
 @pytest.fixture
@@ -395,8 +389,9 @@ def default_queue(default_exchange):
 
     This fixture offers a default :class:`kombu.Queue`.
     """
-    return Queue('test-queue', exchange=default_exchange,
-                 routing_key='test-routing-key')
+    return Queue(
+        "test-queue", exchange=default_exchange, routing_key="test-routing-key"
+    )
 
 
 @pytest.fixture
@@ -417,12 +412,11 @@ def default_in_memory_producer(in_memory_queue_connection, default_exchange):
 
     """
     return in_memory_queue_connection.Producer(
-        exchange=default_exchange,
-        routing_key='test-routing-key',
-        serializer='json')
+        exchange=default_exchange, routing_key="test-routing-key", serializer="json"
+    )
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def sample_workflow_workspace(tmp_shared_volume_path):
     """Return the directory path of a sample workspace.
 
@@ -432,18 +426,16 @@ def sample_workflow_workspace(tmp_shared_volume_path):
     the ``tests/test_workspace`` directory.
 
     """
+
     def _create_sample_workflow_workspace(workflow_id):
         test_workspace_path = pkg_resources.resource_filename(
-            'pytest_reana',
-            'test_workspace')
-        sample_workspace_path = os.path.join(tmp_shared_volume_path,
-                                             str(workflow_id))
+            "pytest_reana", "test_workspace"
+        )
+        sample_workspace_path = os.path.join(tmp_shared_volume_path, str(workflow_id))
         if not os.path.exists(sample_workspace_path):
-            shutil.copytree(test_workspace_path,
-                            sample_workspace_path)
+            shutil.copytree(test_workspace_path, sample_workspace_path)
             yield sample_workspace_path
-            shutil.rmtree(test_workspace_path,
-                          sample_workspace_path)
+            shutil.rmtree(test_workspace_path, sample_workspace_path)
         else:
             yield sample_workspace_path
 
@@ -451,25 +443,22 @@ def sample_workflow_workspace(tmp_shared_volume_path):
 
 
 @pytest.fixture()
-def sample_yadage_workflow_in_db(app,
-                                 default_user,
-                                 session,
-                                 yadage_workflow_with_name):
+def sample_yadage_workflow_in_db(app, default_user, session, yadage_workflow_with_name):
     """Create a sample workflow in the database.
 
     Scope: function
 
     Adds a sample yadage workflow in the DB.
     """
-    workflow = Workflow(id_=uuid4(),
-                        name='sample_serial_workflow_1',
-                        owner_id=default_user.id_,
-                        reana_specification=yadage_workflow_with_name[
-                            'reana_specification'],
-                        operational_options={},
-                        type_=yadage_workflow_with_name[
-                            'reana_specification']['workflow']['type'],
-                        logs='')
+    workflow = Workflow(
+        id_=uuid4(),
+        name="sample_serial_workflow_1",
+        owner_id=default_user.id_,
+        reana_specification=yadage_workflow_with_name["reana_specification"],
+        operational_options={},
+        type_=yadage_workflow_with_name["reana_specification"]["workflow"]["type"],
+        logs="",
+    )
     session.add(workflow)
     session.commit()
     yield workflow
@@ -487,12 +476,13 @@ def sample_serial_workflow_in_db(app, default_user, session, serial_workflow):
     """
     workflow = Workflow(
         id_=uuid4(),
-        name='sample_serial_workflow_1',
+        name="sample_serial_workflow_1",
         owner_id=default_user.id_,
-        reana_specification=serial_workflow['reana_specification'],
+        reana_specification=serial_workflow["reana_specification"],
         operational_options={},
-        type_=serial_workflow['reana_specification']['workflow']['type'],
-        logs='')
+        type_=serial_workflow["reana_specification"]["workflow"]["type"],
+        logs="",
+    )
     session.add(workflow)
     session.commit()
     yield workflow
@@ -521,14 +511,11 @@ def no_db_user():
 @pytest.fixture
 def user_secrets():
     """Test user secrets dictionary."""
-    keytab_file = base64.b64encode(b'keytab file.')
+    keytab_file = base64.b64encode(b"keytab file.")
     user_secrets = {
-        "username": {"value": "reanauser",
-                     "type": "env"},
-        "password": {"value": "1232456",
-                     "type": "env"},
-        ".keytab": {"value": keytab_file,
-                    "type": "file"}
+        "username": {"value": "reanauser", "type": "env"},
+        "password": {"value": "1232456", "type": "env"},
+        ".keytab": {"value": keytab_file, "type": "file"},
     }
     return user_secrets
 
@@ -547,6 +534,7 @@ def corev1_api_client_with_user_secrets(no_db_user):
 
     Adds the CoreV1APIClient with example user secrets.
     """
+
     def make_corev1_api_client_with_user_secrets(user_secrets):
         """Callable to return.
 
@@ -554,21 +542,20 @@ def corev1_api_client_with_user_secrets(no_db_user):
         """
         corev1_api_client = Mock()
         metadata = client.V1ObjectMeta(name=str(no_db_user.id_))
-        metadata.annotations = {'secrets_types': '{}'}
+        metadata.annotations = {"secrets_types": "{}"}
         user_secrets_values = {}
         secrets_types = {}
         for secret_name in user_secrets:
             # Add type metadata to secret store
-            secrets_types[secret_name] = \
-                user_secrets[secret_name]['type']
-            user_secrets_values[secret_name] = \
-                user_secrets[secret_name]['value']
-        metadata.annotations['secrets_types'] = json.dumps(secrets_types)
+            secrets_types[secret_name] = user_secrets[secret_name]["type"]
+            user_secrets_values[secret_name] = user_secrets[secret_name]["value"]
+        metadata.annotations["secrets_types"] = json.dumps(secrets_types)
         k8s_secrets_store = client.V1Secret(
-            api_version="v1",
-            metadata=metadata,
-            data=user_secrets_values)
-        corev1_api_client.read_namespaced_secret = \
+            api_version="v1", metadata=metadata, data=user_secrets_values
+        )
+        corev1_api_client.read_namespaced_secret = (
             lambda name, namespace: k8s_secrets_store
+        )
         return corev1_api_client
+
     return make_corev1_api_client_with_user_secrets

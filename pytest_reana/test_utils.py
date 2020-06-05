@@ -17,15 +17,15 @@ def make_mock_api_client(component):
     mock_response, mock_http_response = Mock(), Mock()
     mock_response = {}
     mock_http_response.status_code = 200
-    mock_http_response.raw_bytes = b'Sample downloaded data'
+    mock_http_response.raw_bytes = b"Sample downloaded data"
 
-    def mock_api_client(mock_response=mock_response,
-                        mock_http_response=mock_http_response):
+    def mock_api_client(
+        mock_response=mock_response, mock_http_response=mock_http_response
+    ):
         mock_http_client, mock_result = Mock(), Mock()
         mock_result.result.return_value = (mock_response, mock_http_response)
         mock_http_client.request.return_value = mock_result
-        mock_api_client = BaseAPIClient(component,
-                                        http_client=mock_http_client)
+        mock_api_client = BaseAPIClient(component, http_client=mock_http_client)
         return mock_api_client._client
 
     return mock_api_client
