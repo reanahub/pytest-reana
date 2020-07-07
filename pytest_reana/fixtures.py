@@ -18,14 +18,14 @@ from uuid import uuid4
 
 import pkg_resources
 import pytest
-from kombu import Connection, Exchange, Producer, Queue
+from kombu import Connection, Exchange, Queue
 from kubernetes import client
-from mock import ANY, Mock, patch
+from mock import Mock, patch
 from reana_commons.consumer import BaseConsumer
 from reana_db.models import Base, User, Workflow
 from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy_utils import create_database, database_exists, drop_database
+from sqlalchemy.schema import CreateSchema
+from sqlalchemy_utils import create_database, database_exists
 
 
 @pytest.yield_fixture(scope="module")
@@ -98,14 +98,19 @@ def app(base_app):
                 assert res.status_code == 200
 
     """
+    from reana_db.database import Session
+
     engine = create_engine(base_app.config["SQLALCHEMY_DATABASE_URI"])
     base_app.session.bind = engine
     with base_app.app_context():
+        if not engine.dialect.has_schema(engine, "__reana"):
+            engine.execute(CreateSchema("__reana"))
         if not database_exists(engine.url):
             create_database(engine.url)
         Base.metadata.create_all(bind=engine)
         yield base_app
-        drop_database(engine.url)
+        Session.close()  # close hanging connections
+        Base.metadata.drop_all(bind=engine)
 
 
 @pytest.fixture()

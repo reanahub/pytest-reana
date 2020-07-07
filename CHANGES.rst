@@ -6,6 +6,7 @@ Version master (UNRELEASED)
 
 - Fixes `bug related to duplicated database session <https://github.com/reanahub/pytest-reana/issues/33>`_.
 - Add Black formatter support.
+- Create ``__reana`` database schema for ``db`` fixture.
 
 Version 0.6.0 (2019-12-19)
 --------------------------
