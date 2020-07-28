@@ -1,6 +1,6 @@
-==============
- pytest-REANA
-==============
+############
+pytest-REANA
+############
 
 .. image:: https://img.shields.io/pypi/pyversions/pytest-reana.svg
       :target: https://pypi.org/pypi/pytest-reana
@@ -24,14 +24,14 @@
    :target: https://github.com/psf/black
 
 About
------
+=====
 
 pytest-REANA is a component of the `REANA <http://www.reana.io/>`_ reusable and
 reproducible research data analysis platform. It provides pytest fixtures and
 test utilities.
 
 Features
---------
+========
 
 - pytest fixtures
 - mocking OpenAPI client with request format validation
@@ -41,14 +41,20 @@ Features
 - mocking database access
 - includes sample workspace directory
 
+Usage
+=====
+
+The detailed information on how to install and use REANA can be found in
+`docs.reana.io <https://docs.reana.io>`_.
+
 Useful links
-------------
+============
 
-- `documentation <https://pytest-reana.readthedocs.io/>`_
-- `releases <https://github.com/reanahub/pytest-reana/releases>`_
-- `known issues <https://github.com/reanahub/pytest-reana/issues>`_
-- `source code <https://github.com/reanahub/pytest-reana>`_
+- `REANA project home page <http://www.reana.io/>`_
+- `REANA user documentation <https://docs.reana.io>`_
+- `REANA user support forum <https://forum.reana.io>`_
 
-For more information about the REANA reusable analysis platform, please see the
-`REANA project <http://www.reana.io>`_ home page and the general `REANA
-documentation <http://reana.readthedocs.io/>`_ pages.
+- `pytest-REANA releases <https://pytest-reana.readthedocs.io/en/latest#changes>`_
+- `pytest-REANA developer documentation <https://pytest-reana.readthedocs.io/>`_
+- `pytest-REANA known issues <https://github.com/reanahub/pytest-reana/issues>`_
+- `pytest-REANA source code <https://github.com/reanahub/pytest-reana>`_
