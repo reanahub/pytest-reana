@@ -34,7 +34,7 @@ setup_requires = [
 
 install_requires = [
     "apispec>=0.21.0,<0.40",
-    'black>=19.10b0 ; python_version>="3"',
+    'black>=19.10b0,<20 ; python_version>="3"',
     "check-manifest>=0.25,<1",
     "checksumdir>=1.1.4,<1.2",
     "click>=7.0",
