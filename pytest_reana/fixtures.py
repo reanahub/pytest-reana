@@ -23,6 +23,7 @@ from kubernetes import client
 from mock import Mock, patch
 from reana_commons.consumer import BaseConsumer
 from reana_db.models import Base, User, Workflow
+from reana_db.utils import build_workspace_path
 from sqlalchemy import create_engine
 from sqlalchemy.schema import CreateSchema
 from sqlalchemy_utils import create_database, database_exists
@@ -48,9 +49,13 @@ def tmp_shared_volume_path(tmpdir_factory):
             assert os.path.exists(path)
 
     """
-    temp_path = str(tmpdir_factory.mktemp("reana"))
-    yield temp_path
-    shutil.rmtree(temp_path)
+    shared_volume_path = os.getenv("SHARED_VOLUME_PATH", "")
+    temp_path = None
+    if not os.path.exists(shared_volume_path):
+        temp_path = str(tmpdir_factory.mktemp("reana"))
+    yield temp_path or shared_volume_path
+    if temp_path:
+        shutil.rmtree(temp_path)
 
 
 @pytest.fixture()
@@ -432,37 +437,37 @@ def sample_workflow_workspace(tmp_shared_volume_path):
 
     """
 
-    def _create_sample_workflow_workspace(workflow_id):
-        test_workspace_path = pkg_resources.resource_filename(
-            "pytest_reana", "test_workspace"
-        )
-        sample_workspace_path = os.path.join(tmp_shared_volume_path, str(workflow_id))
-        if not os.path.exists(sample_workspace_path):
-            shutil.copytree(test_workspace_path, sample_workspace_path)
-            yield sample_workspace_path
-            shutil.rmtree(test_workspace_path, sample_workspace_path)
-        else:
-            yield sample_workspace_path
+    def _create_sample_workflow_workspace(relative_workspace_path):
+        empty_workspace = os.path.join(tmp_shared_volume_path, relative_workspace_path)
+        if not os.path.exists(empty_workspace):
+            os.makedirs(empty_workspace)
+        yield empty_workspace
 
     return _create_sample_workflow_workspace
 
 
 @pytest.fixture()
-def sample_yadage_workflow_in_db(app, default_user, session, yadage_workflow_with_name):
+def sample_yadage_workflow_in_db(
+    app, default_user, session, yadage_workflow_with_name, sample_workflow_workspace
+):
     """Create a sample workflow in the database.
 
     Scope: function
 
     Adds a sample yadage workflow in the DB.
     """
+    workflow_id = uuid4()
+    relative_workspace_path = build_workspace_path(default_user.id_, workflow_id)
+    next(sample_workflow_workspace(relative_workspace_path))
     workflow = Workflow(
-        id_=uuid4(),
+        id_=workflow_id,
         name="sample_serial_workflow_1",
         owner_id=default_user.id_,
         reana_specification=yadage_workflow_with_name["reana_specification"],
         operational_options={},
         type_=yadage_workflow_with_name["reana_specification"]["workflow"]["type"],
         logs="",
+        workspace_path=relative_workspace_path,
     )
     session.add(workflow)
     session.commit()
@@ -472,21 +477,27 @@ def sample_yadage_workflow_in_db(app, default_user, session, yadage_workflow_wit
 
 
 @pytest.fixture()
-def sample_serial_workflow_in_db(app, default_user, session, serial_workflow):
+def sample_serial_workflow_in_db(
+    app, default_user, session, serial_workflow, sample_workflow_workspace
+):
     """Create a sample workflow in the database.
 
     Scope: function
 
     Adds a sample serial workflow in the DB.
     """
+    workflow_id = uuid4()
+    relative_workspace_path = build_workspace_path(default_user.id_, workflow_id)
+    next(sample_workflow_workspace(relative_workspace_path))
     workflow = Workflow(
-        id_=uuid4(),
+        id_=workflow_id,
         name="sample_serial_workflow_1",
         owner_id=default_user.id_,
         reana_specification=serial_workflow["reana_specification"],
         operational_options={},
         type_=serial_workflow["reana_specification"]["workflow"]["type"],
         logs="",
+        workspace_path=relative_workspace_path,
     )
     session.add(workflow)
     session.commit()
