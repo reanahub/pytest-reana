@@ -22,7 +22,6 @@ from kombu import Connection, Exchange, Queue
 from kubernetes import client
 from mock import Mock, patch
 from reana_commons.consumer import BaseConsumer
-from reana_db.models import Base, User, Workflow
 from reana_db.utils import build_workspace_path
 from sqlalchemy import create_engine
 from sqlalchemy.schema import CreateSchema
@@ -104,6 +103,7 @@ def app(base_app):
 
     """
     from reana_db.database import Session
+    from reana_db.models import Base
 
     engine = create_engine(base_app.config["SQLALCHEMY_DATABASE_URI"])
     base_app.session.bind = engine
@@ -139,6 +139,8 @@ def default_user(app, session):
 
 
     """
+    from reana_db.models import User
+
     default_user_id = "00000000-0000-0000-0000-000000000000"
     user = User.query.filter_by(id_=default_user_id).first()
     if not user:
@@ -456,6 +458,8 @@ def sample_yadage_workflow_in_db(
 
     Adds a sample yadage workflow in the DB.
     """
+    from reana_db.models import Workflow
+
     workflow_id = uuid4()
     relative_workspace_path = build_workspace_path(default_user.id_, workflow_id)
     next(sample_workflow_workspace(relative_workspace_path))
@@ -486,6 +490,8 @@ def sample_serial_workflow_in_db(
 
     Adds a sample serial workflow in the DB.
     """
+    from reana_db.models import Workflow
+
     workflow_id = uuid4()
     relative_workspace_path = build_workspace_path(default_user.id_, workflow_id)
     next(sample_workflow_workspace(relative_workspace_path))
