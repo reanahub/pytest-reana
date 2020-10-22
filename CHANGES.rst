@@ -7,12 +7,13 @@ Version master (UNRELEASED)
 - Makes the `tmp_shared_volume_path` configurable through environment variable.
 - Creates empty workflow workspaces for sample workflows by default.
 
-Version 0.7.0 (UNRELEASED)
----------------------------
+Version 0.7.0 (2020-10-20)
+--------------------------
 
-- Fixes `bug related to duplicated database session <https://github.com/reanahub/pytest-reana/issues/33>`_.
-- Add Black formatter support.
-- Create ``__reana`` database schema for ``db`` fixture.
+- Adds new ``__reana`` database schema for ``db`` fixture.
+- Fixes a problem related to duplicated database session.
+- Changes code formatting to respect ``black`` coding style.
+- Changes documentation to single-page layout.
 
 Version 0.6.0 (2019-12-19)
 --------------------------
