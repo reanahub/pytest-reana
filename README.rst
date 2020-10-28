@@ -5,14 +5,14 @@ pytest-REANA
 .. image:: https://img.shields.io/pypi/pyversions/pytest-reana.svg
       :target: https://pypi.org/pypi/pytest-reana
 
-.. image:: https://img.shields.io/travis/reanahub/pytest-reana.svg
-      :target: https://travis-ci.org/reanahub/pytest-reana
+.. image:: https://github.com/reanahub/pytest-reana/workflows/CI/badge.svg
+      :target: https://github.com/reanahub/pytest-reana/actions
 
 .. image:: https://readthedocs.org/projects/pytest-reana/badge/?version=latest
       :target: https://pytest-reana.readthedocs.io/en/latest/?badge=latest
 
-.. image:: https://img.shields.io/coveralls/reanahub/pytest-reana.svg
-      :target: https://coveralls.io/r/reanahub/pytest-reana
+.. image:: https://codecov.io/gh/reanahub/pytest-reana/branch/master/graph/badge.svg
+      :target: https://codecov.io/gh/reanahub/pytest-reana
 
 .. image:: https://badges.gitter.im/Join%20Chat.svg
       :target: https://gitter.im/reanahub/reana?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
@@ -21,7 +21,7 @@ pytest-REANA
       :target: https://github.com/reanahub/pytest-reana/blob/master/LICENSE
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-   :target: https://github.com/psf/black
+      :target: https://github.com/psf/black
 
 About
 =====
