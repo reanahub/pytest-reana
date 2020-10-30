@@ -103,7 +103,7 @@ def app(base_app):
 
     """
     from reana_db.database import Session
-    from reana_db.models import Base
+    from reana_db.models import Base, Resource
 
     engine = create_engine(base_app.config["SQLALCHEMY_DATABASE_URI"])
     base_app.session.bind = engine
@@ -113,6 +113,7 @@ def app(base_app):
         if not database_exists(engine.url):
             create_database(engine.url)
         Base.metadata.create_all(bind=engine)
+        Resource.initialise_default_resources()
         yield base_app
         Session.close()  # close hanging connections
         Base.metadata.drop_all(bind=engine)
@@ -476,6 +477,8 @@ def sample_yadage_workflow_in_db(
     session.add(workflow)
     session.commit()
     yield workflow
+    for resource in workflow.resources:
+        session.delete(resource)
     session.delete(workflow)
     session.commit()
 
@@ -508,6 +511,8 @@ def sample_serial_workflow_in_db(
     session.add(workflow)
     session.commit()
     yield workflow
+    for resource in workflow.resources:
+        session.delete(resource)
     session.delete(workflow)
     session.commit()
 
