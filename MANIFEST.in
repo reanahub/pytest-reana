@@ -12,6 +12,7 @@ include *.rst
 include *.sh
 include *.yaml
 include pytest.ini
+include .flake8
 prune docs/_build
 recursive-include pytest_reana *.py
 recursive-include pytest_reana *.csv

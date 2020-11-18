@@ -29,5 +29,5 @@ def test_tmp_shared_volume_path_fixture(testdir):
     )
 
     # run pytest with the following cmd args
-    result = testdir.runpytest()
+    testdir.runpytest()
     testdir.runpytest().assert_outcomes(passed=1)
