@@ -1,11 +1,12 @@
 Changes
 =======
 
-Version 0.7.0 (UNRELEASED)
+Version 0.7.1 (2021-03-17)
 --------------------------
 
 - Adds support for Python 3.9.
 - Fixes minor code warnings.
+- Fixes installation by upgrading REANA-DB version.
 
 Version 0.7.0 (2020-10-20)
 --------------------------
