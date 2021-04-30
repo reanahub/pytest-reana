@@ -1,17 +1,18 @@
 Changes
 =======
 
-Version master (UNRELEASED)
+Version 0.8.0 (UNRELEASED)
 ---------------------------
 
 - Makes the `tmp_shared_volume_path` configurable through environment variable.
 - Creates empty workflow workspaces for sample workflows by default.
 
-Version 0.7.1 (UNRELEASED)
+Version 0.7.1 (2021-03-17)
 --------------------------
 
 - Adds support for Python 3.9.
 - Fixes minor code warnings.
+- Fixes installation by upgrading REANA-DB version.
 
 Version 0.7.0 (2020-10-20)
 --------------------------
