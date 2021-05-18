@@ -7,7 +7,6 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 """REANA Pytest Commons test utilities."""
 
-import click
 from mock import Mock
 from reana_commons.api_client import BaseAPIClient
 
