@@ -51,6 +51,7 @@ install_requires = [
     "reana-commons[kubernetes]>=0.8.0a11,<0.9.0",
     "reana-db>=0.8.0a15,<0.9.0",
     "swagger_spec_validator>=2.1.0,<3.0",
+    'oauthlib==3.1.0; python_version=="2.7"',
 ]
 packages = find_packages()
 

@@ -33,4 +33,5 @@ from .fixtures import (
     user_secrets,
     yadage_workflow_with_name,
     yadage_workflow_without_name,
+    yadage_workflow_spec_loaded,
 )
