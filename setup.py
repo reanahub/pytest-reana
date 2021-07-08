@@ -37,7 +37,6 @@ install_requires = [
     'black>=19.10b0,<20 ; python_version>="3"',
     "check-manifest>=0.25,<1",
     "checksumdir>=1.1.4,<1.2",
-    "click>=7.0",
     "coverage>=5.0,<6.0",
     "jsonschema>=3.2.0,<4.0",
     'webcolors<=1.10 ; python_version=="2.7"',

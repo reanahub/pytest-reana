@@ -8,6 +8,11 @@ Version 0.8.0 (UNRELEASED)
 - Creates empty workflow workspaces for sample workflows by default.
 - Adds nested Yadage workflow specification fixture.
 
+Version 0.7.2 (2021-07-02)
+--------------------------
+
+- Changes internal dependencies to remove click.
+
 Version 0.7.1 (2021-03-17)
 --------------------------
 
