@@ -7,6 +7,7 @@ Version 0.8.0 (UNRELEASED)
 - Makes the `tmp_shared_volume_path` configurable through environment variable.
 - Creates empty workflow workspaces for sample workflows by default.
 - Adds nested Yadage workflow specification fixture.
+- Removes support for Python 2.
 
 Version 0.7.2 (2021-07-02)
 --------------------------

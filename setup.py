@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of REANA.
-# Copyright (C) 2018, 2019 CERN.
+# Copyright (C) 2018, 2019, 2020, 2021 CERN.
 #
 # REANA is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -34,23 +34,20 @@ setup_requires = [
 
 install_requires = [
     "apispec>=0.21.0,<0.40",
-    'black>=19.10b0,<20 ; python_version>="3"',
+    "black>=19.10b0,<20",
     "check-manifest>=0.25,<1",
     "checksumdir>=1.1.4,<1.2",
     "coverage>=5.0,<6.0",
     "jsonschema>=3.2.0,<4.0",
-    'webcolors<=1.10 ; python_version=="2.7"',
     "mock>=3.0,<4.0",
     "pika>=0.12.0,<0.13",
-    'pydocstyle>=5.0.0,<6.0.0 ; python_version>="3"',
-    'pydocstyle==3.0.0 ; python_version=="2.7"',
+    "pydocstyle>=5.0.0,<6.0.0",
     "pytest-cache>=1.0,<2.0",
     "pytest-cov>=2.8.0,<3.0",
     "pytest>=4.6.0,<5.0.0",
-    "reana-commons[kubernetes]>=0.8.0a11,<0.9.0",
-    "reana-db>=0.8.0a15,<0.9.0",
+    "reana-commons[kubernetes]>=0.8.0a19,<0.9.0",
+    "reana-db>=0.8.0a19,<0.9.0",
     "swagger_spec_validator>=2.1.0,<3.0",
-    'oauthlib==3.1.0; python_version=="2.7"',
 ]
 packages = find_packages()
 
@@ -81,8 +78,6 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
