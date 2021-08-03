@@ -654,7 +654,12 @@ def sample_workflow_workspace(tmp_shared_volume_path):
 
 @pytest.fixture()
 def sample_yadage_workflow_in_db(
-    app, default_user, session, yadage_workflow_with_name, sample_workflow_workspace
+    app,
+    default_user,
+    session,
+    yadage_workflow_with_name,
+    sample_workflow_workspace,
+    tmp_shared_volume_path,
 ):
     """Create a sample workflow in the database.
 
@@ -665,7 +670,9 @@ def sample_yadage_workflow_in_db(
     from reana_db.models import Workflow
 
     workflow_id = uuid4()
-    relative_workspace_path = build_workspace_path(default_user.id_, workflow_id)
+    relative_workspace_path = build_workspace_path(
+        default_user.id_, workflow_id, tmp_shared_volume_path
+    )
     next(sample_workflow_workspace(relative_workspace_path))
     workflow = Workflow(
         id_=workflow_id,
@@ -688,7 +695,12 @@ def sample_yadage_workflow_in_db(
 
 @pytest.fixture()
 def sample_serial_workflow_in_db(
-    app, default_user, session, serial_workflow, sample_workflow_workspace
+    app,
+    default_user,
+    session,
+    serial_workflow,
+    sample_workflow_workspace,
+    tmp_shared_volume_path,
 ):
     """Create a sample workflow in the database.
 
@@ -699,7 +711,9 @@ def sample_serial_workflow_in_db(
     from reana_db.models import Workflow
 
     workflow_id = uuid4()
-    relative_workspace_path = build_workspace_path(default_user.id_, workflow_id)
+    relative_workspace_path = build_workspace_path(
+        default_user.id_, workflow_id, tmp_shared_volume_path
+    )
     next(sample_workflow_workspace(relative_workspace_path))
     workflow = Workflow(
         id_=workflow_id,
