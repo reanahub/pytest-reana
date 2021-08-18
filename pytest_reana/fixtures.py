@@ -155,7 +155,7 @@ def default_user(app, session):
 
 
 @pytest.fixture()
-def serial_workflow():
+def serial_workflow(tmp_shared_volume_path):
     """Create a serial workflow.
 
     Scope: function
@@ -175,12 +175,13 @@ def serial_workflow():
                 },
                 "type": "serial",
             },
+            "workspace": {"workspace_root_path": tmp_shared_volume_path},
         },
     }
 
 
 @pytest.fixture()
-def cwl_workflow_with_name():
+def cwl_workflow_with_name(tmp_shared_volume_path):
     """CWL workflow with name.
 
     Scope: function
@@ -195,13 +196,14 @@ def cwl_workflow_with_name():
                 "type": "cwl",
             },
             "type": "cwl",
+            "workspace": {"workspace_root_path": tmp_shared_volume_path},
         },
         "workflow_name": "my_test_workflow",
     }
 
 
 @pytest.fixture()
-def yadage_workflow_with_name():
+def yadage_workflow_with_name(tmp_shared_volume_path):
     """Yadage workflow with name.
 
     Scope: function
@@ -216,13 +218,14 @@ def yadage_workflow_with_name():
             },
             "inputs": {"parameters": {"min_year": "1991", "max_year": "2001"}},
             "type": "yadage",
+            "workspace": {"workspace_root_path": tmp_shared_volume_path},
         },
         "name": "my_test_workflow",
     }
 
 
 @pytest.fixture()
-def cwl_workflow_without_name():
+def cwl_workflow_without_name(tmp_shared_volume_path):
     """CWL workflow without name.
 
     Scope: function
@@ -237,6 +240,7 @@ def cwl_workflow_without_name():
                 "type": "cwl",
             },
             "type": "cwl",
+            "workspace": {"workspace_root_path": tmp_shared_volume_path},
         },
         "name": "",
     }
@@ -654,12 +658,7 @@ def sample_workflow_workspace(tmp_shared_volume_path):
 
 @pytest.fixture()
 def sample_yadage_workflow_in_db(
-    app,
-    default_user,
-    session,
-    yadage_workflow_with_name,
-    sample_workflow_workspace,
-    tmp_shared_volume_path,
+    app, default_user, session, yadage_workflow_with_name, sample_workflow_workspace,
 ):
     """Create a sample workflow in the database.
 
@@ -671,7 +670,11 @@ def sample_yadage_workflow_in_db(
 
     workflow_id = uuid4()
     relative_workspace_path = build_workspace_path(
-        default_user.id_, workflow_id, tmp_shared_volume_path
+        default_user.id_,
+        workflow_id,
+        yadage_workflow_with_name["reana_specification"]["workspace"][
+            "workspace_root_path"
+        ],
     )
     next(sample_workflow_workspace(relative_workspace_path))
     workflow = Workflow(
@@ -695,12 +698,7 @@ def sample_yadage_workflow_in_db(
 
 @pytest.fixture()
 def sample_serial_workflow_in_db(
-    app,
-    default_user,
-    session,
-    serial_workflow,
-    sample_workflow_workspace,
-    tmp_shared_volume_path,
+    app, default_user, session, serial_workflow, sample_workflow_workspace,
 ):
     """Create a sample workflow in the database.
 
@@ -712,7 +710,9 @@ def sample_serial_workflow_in_db(
 
     workflow_id = uuid4()
     relative_workspace_path = build_workspace_path(
-        default_user.id_, workflow_id, tmp_shared_volume_path
+        default_user.id_,
+        workflow_id,
+        serial_workflow["reana_specification"]["workspace"]["workspace_root_path"],
     )
     next(sample_workflow_workspace(relative_workspace_path))
     workflow = Workflow(
