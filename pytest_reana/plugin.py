@@ -29,6 +29,7 @@ from .fixtures import (
     sample_yadage_workflow_in_db,
     serial_workflow,
     session,
+    snakemake_workflow_spec_loaded,
     tmp_shared_volume_path,
     user_secrets,
     yadage_workflow_with_name,

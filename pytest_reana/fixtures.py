@@ -466,6 +466,63 @@ def yadage_workflow_spec_loaded():
     }
 
 
+@pytest.fixture()
+def snakemake_workflow_spec_loaded():
+    """Scatter-gather Snakemake workflow.
+
+    Scope: function
+
+    This fixture provides the internal representation of a basic scatter-gather ``snakemake`` workflow loaded as dictionary.
+    """
+    return {
+        "version": "0.8.0",
+        "workflow": {
+            "type": "snakemake",
+            "file": "workflow/snakemake/Snakemake",
+            "specification": {
+                "job_dependencies": {
+                    "all": ["gather"],
+                    "gather": ["scatterA", "scatterB"],
+                    "scatterA": [],
+                    "scatterB": [],
+                },
+                "steps": [
+                    {
+                        "commands": ["sleep 15 && mkdir -p results && touch {output}"],
+                        "environment": "python:2.7-slim",
+                        "inputs": {},
+                        "kubernetes_memory_limit": None,
+                        "kubernetes_uid": None,
+                        "name": "scatterA",
+                        "outputs": {},
+                        "params": {},
+                    },
+                    {
+                        "commands": ["sleep 30 && mkdir -p results && touch {output}"],
+                        "environment": "python:2.7-slim",
+                        "inputs": {},
+                        "kubernetes_memory_limit": None,
+                        "kubernetes_uid": None,
+                        "name": "scatterB",
+                        "outputs": {},
+                        "params": {},
+                    },
+                    {
+                        "commands": ["sleep 5 && touch {output}"],
+                        "environment": "python:2.7-slim",
+                        "inputs": {},
+                        "kubernetes_memory_limit": None,
+                        "kubernetes_uid": None,
+                        "name": "gather",
+                        "outputs": {},
+                        "params": {},
+                    },
+                ],
+            },
+        },
+    }
+
+
 class _BaseConsumerTestIMPL(BaseConsumer):
     """Test implementation of a REANAConsumer class.
 
