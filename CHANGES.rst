@@ -1,12 +1,14 @@
 Changes
 =======
 
-Version 0.8.0 (UNRELEASED)
+Version 0.8.0 (2021-11-22)
 ---------------------------
 
-- Makes the `tmp_shared_volume_path` configurable through environment variable.
-- Creates empty workflow workspaces for sample workflows by default.
 - Adds nested Yadage workflow specification fixture.
+- Adds empty workflow workspaces for sample workflows by default.
+- Adds internal representation of a scatter-gather Snakemake workflow fixture.
+- Changes ``tmp_shared_volume_path`` fixture to be configurable through environment variable.
+- Changes fixtures to run with the full workspace path stored in the database.
 - Removes support for Python 2.
 
 Version 0.7.2 (2021-07-02)
