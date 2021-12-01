@@ -68,6 +68,7 @@ setup(
     url="https://github.com/reanahub/pytest-reana",
     packages=["pytest_reana",],
     zip_safe=False,
+    python_requires=">=3.6",
     install_requires=install_requires,
     extras_require=extras_require,
     setup_requires=setup_requires,
