@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of REANA.
-# Copyright (C) 2018, 2019, 2020, 2021 CERN.
+# Copyright (C) 2018, 2019, 2020, 2021, 2022 CERN.
 #
 # REANA is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -43,8 +43,8 @@ install_requires = [
     "pika>=0.12.0,<0.13",
     "pydocstyle>=5.0.0,<6.0.0",
     "pytest-cache>=1.0,<2.0",
-    "pytest-cov>=2.8.0,<3.0",
-    "pytest>=4.6.0,<5.0.0",
+    "pytest-cov>=3.0.0,<4.0",
+    "pytest>=6.2.5,<7.0.0",
     "reana-commons[kubernetes]>=0.8.0a19,<0.9.0",
     "reana-db>=0.8.0a19,<0.9.0",
     "swagger_spec_validator>=2.1.0,<3.0",
@@ -84,6 +84,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
