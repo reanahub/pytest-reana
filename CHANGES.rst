@@ -1,7 +1,7 @@
 Changes
 =======
 
-Version 0.8.1 (UNRELEASED)
+Version 0.8.1 (2022-01-05)
 --------------------------
 
 - Adds support for Python 3.10.
