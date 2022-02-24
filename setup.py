@@ -45,8 +45,8 @@ install_requires = [
     "pytest-cache>=1.0,<2.0",
     "pytest-cov>=3.0.0,<4.0",
     "pytest>=6.2.5,<7.0.0",
-    "reana-commons[kubernetes]>=0.8.0a19,<0.9.0",
-    "reana-db>=0.8.0a19,<0.9.0",
+    "reana-commons[kubernetes]>=0.8.0,<0.10.0",
+    "reana-db>=0.8.0,<0.10.0",
     "swagger_spec_validator>=2.1.0,<3.0",
 ]
 packages = find_packages()
