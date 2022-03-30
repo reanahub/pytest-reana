@@ -1,6 +1,12 @@
 Changes
 =======
 
+Version 0.9.0 (UNRELEASED)
+--------------------------
+
+- Changes `black` code formatter version.
+- Fixes location of Celery docs for ReadTheDocs pages.
+
 Version 0.8.1 (2022-01-05)
 --------------------------
 
