@@ -19,7 +19,10 @@ readme = open("README.rst").read()
 history = open("CHANGES.rst").read()
 
 extras_require = {
-    "docs": ["Sphinx>=1.4.4", "sphinx-rtd-theme>=0.1.9",],
+    "docs": [
+        "Sphinx>=1.4.4",
+        "sphinx-rtd-theme>=0.1.9",
+    ],
 }
 
 extras_require["all"] = []
@@ -34,7 +37,7 @@ setup_requires = [
 
 install_requires = [
     "apispec>=0.21.0,<0.40",
-    "black>=19.10b0,<20",
+    "black>=22",
     "check-manifest>=0.25,<1",
     "checksumdir>=1.1.4,<1.2",
     "coverage>=5.0,<6.0",
@@ -66,7 +69,9 @@ setup(
     author="REANA",
     author_email="info@reana.io",
     url="https://github.com/reanahub/pytest-reana",
-    packages=["pytest_reana",],
+    packages=[
+        "pytest_reana",
+    ],
     zip_safe=False,
     python_requires=">=3.6",
     install_requires=install_requires,
@@ -90,5 +95,9 @@ setup(
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    entry_points={"pytest11": ["reana = pytest_reana.plugin",]},
+    entry_points={
+        "pytest11": [
+            "reana = pytest_reana.plugin",
+        ]
+    },
 )
