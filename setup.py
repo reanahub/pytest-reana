@@ -37,7 +37,6 @@ setup_requires = [
 
 install_requires = [
     "apispec>=0.21.0,<0.40",
-    "black>=22",
     "check-manifest>=0.25,<1",
     "checksumdir>=1.1.4,<1.2",
     "coverage>=5.0,<6.0",
