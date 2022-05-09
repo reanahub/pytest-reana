@@ -6,6 +6,7 @@ Version 0.9.0 (UNRELEASED)
 
 - Fixes location of Celery docs for ReadTheDocs pages.
 - Removes hard-dependency on `black` code formatter version.
+- Adds fixture providing the secrets needed by Kerberos.
 
 Version 0.8.1 (2022-01-05)
 --------------------------

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of REANA.
-# Copyright (C) 2018, 2019, 2020, 2021 CERN.
+# Copyright (C) 2018, 2019, 2020, 2021, 2022 CERN.
 #
 # REANA is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -818,6 +818,19 @@ def user_secrets():
         "password": {"value": "1232456", "type": "env"},
         ".keytab": {"value": keytab_file, "type": "file"},
     }
+    return user_secrets
+
+
+@pytest.fixture
+def kerberos_user_secrets():
+    """User secrets needed by Kerberos."""
+    user_secrets = {
+        "CERN_USER": {"value": b"johndoe", "type": "env"},
+        "CERN_KEYTAB": {"value": b".keytab", "type": "env"},
+        ".keytab": {"value": b"keytab file", "type": "file"},
+    }
+    for secret in user_secrets.values():
+        secret["value"] = base64.b64encode(secret["value"])
     return user_secrets
 
 
