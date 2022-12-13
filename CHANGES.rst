@@ -1,10 +1,10 @@
 Changes
 =======
 
-Version 0.9.0 (UNRELEASED)
+Version 0.9.0 (2022-12-13)
 --------------------------
 
-- Adds fixture providing the secrets needed by Kerberos.
+- Adds fixture providing example of user secrets needed for Kerberos tests.
 - Adds support for Python 3.11.
 - Fixes location of Celery docs for ReadTheDocs pages.
 - Removes hard-dependency on `black` code formatter version.
