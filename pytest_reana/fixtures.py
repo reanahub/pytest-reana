@@ -607,7 +607,7 @@ def consume_queue():
     def _consume_queue(consumer, limit=None):
         """Consume AMQP queue.
 
-        :param consumer: A :class:`kombu.Consumer` to consume from.
+        :param consumer: A class:`kombu.Consumer` to consume from.
         :param limit: Integer which represents how many items to consume
             from the queue, if not specified, the consume method will run
             uninterruptedly.
@@ -629,7 +629,7 @@ def in_memory_queue_connection():
 
     Scope: session
 
-    This fixture offers an in memory :class:`kombu.Connection` scoped to the
+    This fixture offers an in memory class:`kombu.Connection` scoped to the
     testing session.
 
     .. code-block:: python
@@ -645,22 +645,22 @@ def in_memory_queue_connection():
 
 @pytest.fixture
 def default_exchange():
-    """Return a default :class:`kombu.Exchange` created from configuration.
+    """Return a default class:`kombu.Exchange` created from configuration.
 
     Scope: function
 
-    This fixture offers a default :class:`kombu.Exchange`.
+    This fixture offers a default class:`kombu.Exchange`.
     """
     return Exchange("test-exchange", type="direct")
 
 
 @pytest.fixture
 def default_queue(default_exchange):
-    """Return a default :class:`kombu.Queue` created from configuration.
+    """Return a default class:`kombu.Queue` created from configuration.
 
     Scope: function
 
-    This fixture offers a default :class:`kombu.Queue`.
+    This fixture offers a default class:`kombu.Queue`.
     """
     return Queue(
         "test-queue", exchange=default_exchange, routing_key="test-routing-key"
@@ -669,11 +669,11 @@ def default_queue(default_exchange):
 
 @pytest.fixture
 def default_in_memory_producer(in_memory_queue_connection, default_exchange):
-    """Rerturn a :class:`kombu.Producer` connected to in memory queue.
+    """Rerturn a class:`kombu.Producer` connected to in memory queue.
 
     Scope: function
 
-    This fixture offers a default :class:`kombu.Producer` instantiated using
+    This fixture offers a default class:`kombu.Producer` instantiated using
     the ``in_memory_queue_connection``.
 
     .. code-block:: python

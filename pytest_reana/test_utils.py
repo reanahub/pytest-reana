@@ -12,7 +12,6 @@ from reana_commons.api_client import BaseAPIClient
 
 
 def make_mock_api_client(component):
-
     mock_response, mock_http_response = Mock(), Mock()
     mock_response = {}
     mock_http_response.status_code = 200
