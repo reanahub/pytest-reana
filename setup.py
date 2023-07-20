@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of REANA.
-# Copyright (C) 2018, 2019, 2020, 2021, 2022 CERN.
+# Copyright (C) 2018, 2019, 2020, 2021, 2022, 2023 CERN.
 #
 # REANA is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -36,7 +36,9 @@ setup_requires = [
 ]
 
 install_requires = [
-    "apispec>=0.21.0,<0.40",
+    # apispec>=4.0 drops support for marshmallow<3
+    "apispec[yaml]>=3.0,<4.0",
+    "apispec-webframeworks",
     "check-manifest>=0.25,<1",
     "checksumdir>=1.1.4,<1.2",
     "coverage>=5.0,<6.0",
