@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of REANA.
-# Copyright (C) 2018, 2019, 2020, 2021, 2022 CERN.
+# Copyright (C) 2018, 2019, 2020, 2021, 2022, 2023 CERN.
 #
 # REANA is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -168,7 +168,7 @@ def serial_workflow():
                 "specification": {
                     "steps": [
                         {
-                            "environment": "reanahub/reana-env-jupyter",
+                            "environment": "docker.io/reanahub/reana-env-jupyter",
                             "commands": ["echo 'Hello REANA'"],
                         }
                     ]
@@ -322,7 +322,7 @@ def yadage_workflow_spec_loaded():
                                 },
                                 "environment": {
                                     "environment_type": "docker-encapsulated",
-                                    "image": "reanahub/reana-env-root6",
+                                    "image": "docker.io/reanahub/reana-env-root6",
                                     "imagetag": "6.18.04",
                                     "resources": [],
                                     "envscript": "",
@@ -371,7 +371,7 @@ def yadage_workflow_spec_loaded():
                                 },
                                 "environment": {
                                     "environment_type": "docker-encapsulated",
-                                    "image": "reanahub/reana-env-root6",
+                                    "image": "docker.io/reanahub/reana-env-root6",
                                     "imagetag": "6.18.04",
                                     "resources": [],
                                     "envscript": "",
@@ -439,7 +439,7 @@ def yadage_workflow_spec_loaded():
                                                 },
                                                 "environment": {
                                                     "environment_type": "docker-encapsulated",
-                                                    "image": "reanahub/reana-env-root6",
+                                                    "image": "docker.io/reanahub/reana-env-root6",
                                                     "imagetag": "6.18.04",
                                                     "resources": [],
                                                     "envscript": "",
