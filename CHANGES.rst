@@ -4,6 +4,7 @@ Changes
 Version 0.9.1 (UNRELEASED)
 --------------------------
 
+- Adds support for Python 3.12.
 - Changes ``apispec`` dependency version in order to be compatible with ``PyYAML`` v6.
 
 Version 0.9.0 (2022-12-13)
