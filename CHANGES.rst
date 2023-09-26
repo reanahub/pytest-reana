@@ -1,11 +1,13 @@
 Changes
 =======
 
-Version 0.9.1 (UNRELEASED)
+Version 0.9.1 (2023-09-26)
 --------------------------
 
 - Adds support for Python 3.12.
 - Changes ``apispec`` dependency version in order to be compatible with ``PyYAML`` v6.
+- Fixes container image fixtures to be Podman-compatible.
+- Fixes Kombu documentation linking.
 
 Version 0.9.0 (2022-12-13)
 --------------------------
