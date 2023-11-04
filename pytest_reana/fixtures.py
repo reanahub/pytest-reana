@@ -120,21 +120,21 @@ def app(base_app):
 
 
 @pytest.fixture()
-def default_user(app, session):
-    """Create users.
+def user0(app, session):
+    """Create admin user.
 
     Scope: function
 
-    This fixture creates an user with a default UUID
-    ``00000000-0000-0000-0000-000000000000``, ``email`` `info@reana.io`
-    and ``access_token`` ``secretkey`` and returns it.
+    This fixture creates an admin user with a default UUID
+    ``00000000-0000-0000-0000-000000000000``, ``email`` `user0@reana.io`
+    and ``access_token`` ``user0token`` and returns it.
 
     .. code-block:: python
 
-        def test_default_user_exists(default)
+        def test_user0_exists(default)
             with app.test_client() as client:
                 res = client.post(url_for('api.get_users'),
-                                  query_string={"user": default_user.id_})
+                                  query_string={"user": user0.id_})
 
                 assert res.status_code == 200
 
@@ -142,13 +142,77 @@ def default_user(app, session):
     """
     from reana_db.models import User
 
-    default_user_id = "00000000-0000-0000-0000-000000000000"
-    user = User.query.filter_by(id_=default_user_id).first()
+    user0_id = "00000000-0000-0000-0000-000000000000"
+    user = User.query.filter_by(id_=user0_id).first()
     if not user:
         with patch("reana_db.database.Session", return_value=session):
-            user = User(
-                id_=default_user_id, email="info@reana.io", access_token="secretkey"
-            )
+            user = User(id_=user0_id, email="user0@reana.io", access_token="user0token")
+        session.add(user)
+        session.commit()
+    return user
+
+
+@pytest.fixture()
+def user1(app, session):
+    """Create first regular user.
+
+    Scope: function
+
+    This fixture creates a user with UUID
+    ``11111111-1111-1111-1111-111111111111``, ``email`` `user1@reana.io`
+    and ``access_token`` ``user1token`` and returns it.
+
+    .. code-block:: python
+
+        def test_user1_exists(default)
+            with app.test_client() as client:
+                res = client.post(url_for('api.get_users'),
+                                  query_string={"user": user1.id_})
+
+                assert res.status_code == 200
+
+
+    """
+    from reana_db.models import User
+
+    user1_id = "11111111-1111-1111-1111-111111111111"
+    user = User.query.filter_by(id_=user1_id).first()
+    if not user:
+        with patch("reana_db.database.Session", return_value=session):
+            user = User(id_=user1_id, email="user1@reana.io", access_token="user1token")
+        session.add(user)
+        session.commit()
+    return user
+
+
+@pytest.fixture()
+def user2(app, session):
+    """Create second regular user.
+
+    Scope: function
+
+    This fixture creates a user with UUID
+    ``22222222-2222-2222-2222-222222222222``, ``email`` `user2@reana.io`
+    and ``access_token`` ``user2token`` and returns it.
+
+    .. code-block:: python
+
+        def test_user2_exists(default)
+            with app.test_client() as client:
+                res = client.post(url_for('api.get_users'),
+                                  query_string={"user": user2.id_})
+
+                assert res.status_code == 200
+
+
+    """
+    from reana_db.models import User
+
+    user2_id = "22222222-2222-2222-2222-222222222222"
+    user = User.query.filter_by(id_=user2_id).first()
+    if not user:
+        with patch("reana_db.database.Session", return_value=session):
+            user = User(id_=user2_id, email="user2@reana.io", access_token="user2token")
         session.add(user)
         session.commit()
     return user
@@ -712,7 +776,7 @@ def sample_workflow_workspace(tmp_shared_volume_path):
 @pytest.fixture()
 def sample_yadage_workflow_in_db(
     app,
-    default_user,
+    user0,
     session,
     yadage_workflow_with_name,
     sample_workflow_workspace,
@@ -728,13 +792,13 @@ def sample_yadage_workflow_in_db(
 
     workflow_id = uuid4()
     relative_workspace_path = build_workspace_path(
-        default_user.id_, workflow_id, tmp_shared_volume_path
+        user0.id_, workflow_id, tmp_shared_volume_path
     )
     next(sample_workflow_workspace(relative_workspace_path))
     workflow = Workflow(
         id_=workflow_id,
         name="sample_serial_workflow_1",
-        owner_id=default_user.id_,
+        owner_id=user0.id_,
         reana_specification=yadage_workflow_with_name["reana_specification"],
         operational_options={},
         type_=yadage_workflow_with_name["reana_specification"]["workflow"]["type"],
@@ -753,7 +817,7 @@ def sample_yadage_workflow_in_db(
 @pytest.fixture()
 def sample_serial_workflow_in_db(
     app,
-    default_user,
+    user0,
     session,
     serial_workflow,
     sample_workflow_workspace,
@@ -769,13 +833,13 @@ def sample_serial_workflow_in_db(
 
     workflow_id = uuid4()
     relative_workspace_path = build_workspace_path(
-        default_user.id_, workflow_id, tmp_shared_volume_path
+        user0.id_, workflow_id, tmp_shared_volume_path
     )
     next(sample_workflow_workspace(relative_workspace_path))
     workflow = Workflow(
         id_=workflow_id,
         name="sample_serial_workflow_1",
-        owner_id=default_user.id_,
+        owner_id=user0.id_,
         reana_specification=serial_workflow["reana_specification"],
         operational_options={},
         type_=serial_workflow["reana_specification"]["workflow"]["type"],
