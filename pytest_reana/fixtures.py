@@ -797,8 +797,49 @@ def sample_yadage_workflow_in_db(
     next(sample_workflow_workspace(relative_workspace_path))
     workflow = Workflow(
         id_=workflow_id,
-        name="sample_serial_workflow_1",
+        name="sample_yadage_workflow_1",
         owner_id=user0.id_,
+        reana_specification=yadage_workflow_with_name["reana_specification"],
+        operational_options={},
+        type_=yadage_workflow_with_name["reana_specification"]["workflow"]["type"],
+        logs="",
+        workspace_path=relative_workspace_path,
+    )
+    session.add(workflow)
+    session.commit()
+    yield workflow
+    for resource in workflow.resources:
+        session.delete(resource)
+    session.delete(workflow)
+    session.commit()
+
+
+@pytest.fixture()
+def sample_yadage_workflow_in_db_owned_by_user1(
+    app,
+    user1,
+    session,
+    yadage_workflow_with_name,
+    sample_workflow_workspace,
+    tmp_shared_volume_path,
+):
+    """Create a sample workflow in the database.
+
+    Scope: function
+
+    Adds a sample yadage workflow in the DB.
+    """
+    from reana_db.models import Workflow
+
+    workflow_id = uuid4()
+    relative_workspace_path = build_workspace_path(
+        user1.id_, workflow_id, tmp_shared_volume_path
+    )
+    next(sample_workflow_workspace(relative_workspace_path))
+    workflow = Workflow(
+        id_=workflow_id,
+        name="sample_yadage_workflow_2",
+        owner_id=user1.id_,
         reana_specification=yadage_workflow_with_name["reana_specification"],
         operational_options={},
         type_=yadage_workflow_with_name["reana_specification"]["workflow"]["type"],
@@ -840,6 +881,47 @@ def sample_serial_workflow_in_db(
         id_=workflow_id,
         name="sample_serial_workflow_1",
         owner_id=user0.id_,
+        reana_specification=serial_workflow["reana_specification"],
+        operational_options={},
+        type_=serial_workflow["reana_specification"]["workflow"]["type"],
+        logs="",
+        workspace_path=relative_workspace_path,
+    )
+    session.add(workflow)
+    session.commit()
+    yield workflow
+    for resource in workflow.resources:
+        session.delete(resource)
+    session.delete(workflow)
+    session.commit()
+
+
+@pytest.fixture()
+def sample_serial_workflow_in_db_owned_by_user1(
+    app,
+    user1,
+    session,
+    serial_workflow,
+    sample_workflow_workspace,
+    tmp_shared_volume_path,
+):
+    """Create a sample workflow in the database.
+
+    Scope: function
+
+    Adds a sample serial workflow in the DB.
+    """
+    from reana_db.models import Workflow
+
+    workflow_id = uuid4()
+    relative_workspace_path = build_workspace_path(
+        user1.id_, workflow_id, tmp_shared_volume_path
+    )
+    next(sample_workflow_workspace(relative_workspace_path))
+    workflow = Workflow(
+        id_=workflow_id,
+        name="sample_serial_workflow_2",
+        owner_id=user1.id_,
         reana_specification=serial_workflow["reana_specification"],
         operational_options={},
         type_=serial_workflow["reana_specification"]["workflow"]["type"],
