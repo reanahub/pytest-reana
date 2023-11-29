@@ -1,6 +1,11 @@
 Changes
 =======
 
+Version 0.9.2 (2023-11-30)
+--------------------------
+
+- Changes CI to use the stable release of Python 3.12.
+
 Version 0.9.1 (2023-09-26)
 --------------------------
 
