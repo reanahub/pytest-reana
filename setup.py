@@ -50,8 +50,8 @@ install_requires = [
     "pytest-cache>=1.0,<2.0",
     "pytest-cov>=3.0.0,<4.0",
     "pytest>=6.2.5,<7.0.0",
-    "reana-commons[kubernetes]>=0.9.8,<0.96.0",
-    "reana-db>=0.9.4,<0.96.0",
+    "reana-commons[kubernetes]>=0.95.0a1,<0.96.0",
+    "reana-db>=0.95.0a1,<0.96.0",
     "swagger_spec_validator>=2.1.0,<3.0",
     "importlib-metadata<5.0.0 ; python_version<'3.8'",
 ]
