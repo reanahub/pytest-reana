@@ -812,12 +812,13 @@ def no_db_user():
 @pytest.fixture
 def user_secrets():
     """Test user secrets dictionary."""
-    keytab_file = base64.b64encode(b"keytab file.")
     user_secrets = {
-        "username": {"value": "reanauser", "type": "env"},
-        "password": {"value": "1232456", "type": "env"},
-        ".keytab": {"value": keytab_file, "type": "file"},
+        "username": {"value": b"reanauser", "type": "env"},
+        "password": {"value": b"1232456", "type": "env"},
+        ".keytab": {"value": b"keytab file.", "type": "file"},
     }
+    for secret in user_secrets.values():
+        secret["value"] = base64.b64encode(secret["value"]).decode()
     return user_secrets
 
 
@@ -830,7 +831,7 @@ def kerberos_user_secrets():
         ".keytab": {"value": b"keytab file", "type": "file"},
     }
     for secret in user_secrets.values():
-        secret["value"] = base64.b64encode(secret["value"])
+        secret["value"] = base64.b64encode(secret["value"]).decode()
     return user_secrets
 
 
@@ -855,7 +856,7 @@ def corev1_api_client_with_user_secrets(no_db_user):
         Should be used with one of the secret store fixtures.
         """
         corev1_api_client = Mock()
-        metadata = client.V1ObjectMeta(name=str(no_db_user.id_))
+        metadata = client.V1ObjectMeta(name=f"reana-secretsstore-{no_db_user.id_}")
         metadata.annotations = {"secrets_types": "{}"}
         user_secrets_values = {}
         secrets_types = {}
