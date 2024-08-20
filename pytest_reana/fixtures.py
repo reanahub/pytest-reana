@@ -788,7 +788,7 @@ def sample_yadage_workflow_in_db(
 
     Adds a sample yadage workflow in the DB.
     """
-    from reana_db.models import Workflow
+    from reana_db.models import Workflow, UserWorkflow
 
     workflow_id = uuid4()
     relative_workspace_path = build_workspace_path(
@@ -808,8 +808,12 @@ def sample_yadage_workflow_in_db(
     session.add(workflow)
     session.commit()
     yield workflow
+    for job in workflow.jobs:
+        session.delete(job)
     for resource in workflow.resources:
         session.delete(resource)
+    for user_workflow in UserWorkflow.query.filter_by(workflow_id=workflow.id_):
+        session.delete(user_workflow)
     session.delete(workflow)
     session.commit()
 
@@ -829,7 +833,7 @@ def sample_yadage_workflow_in_db_owned_by_user1(
 
     Adds a sample yadage workflow in the DB.
     """
-    from reana_db.models import Workflow
+    from reana_db.models import Workflow, UserWorkflow
 
     workflow_id = uuid4()
     relative_workspace_path = build_workspace_path(
@@ -849,8 +853,12 @@ def sample_yadage_workflow_in_db_owned_by_user1(
     session.add(workflow)
     session.commit()
     yield workflow
+    for job in workflow.jobs:
+        session.delete(job)
     for resource in workflow.resources:
         session.delete(resource)
+    for user_workflow in UserWorkflow.query.filter_by(workflow_id=workflow.id_):
+        session.delete(user_workflow)
     session.delete(workflow)
     session.commit()
 
@@ -870,7 +878,7 @@ def sample_serial_workflow_in_db(
 
     Adds a sample serial workflow in the DB.
     """
-    from reana_db.models import Workflow
+    from reana_db.models import Workflow, UserWorkflow
 
     workflow_id = uuid4()
     relative_workspace_path = build_workspace_path(
@@ -890,8 +898,12 @@ def sample_serial_workflow_in_db(
     session.add(workflow)
     session.commit()
     yield workflow
+    for job in workflow.jobs:
+        session.delete(job)
     for resource in workflow.resources:
         session.delete(resource)
+    for user_workflow in UserWorkflow.query.filter_by(workflow_id=workflow.id_):
+        session.delete(user_workflow)
     session.delete(workflow)
     session.commit()
 
@@ -911,7 +923,7 @@ def sample_serial_workflow_in_db_owned_by_user1(
 
     Adds a sample serial workflow in the DB.
     """
-    from reana_db.models import Workflow
+    from reana_db.models import Workflow, UserWorkflow
 
     workflow_id = uuid4()
     relative_workspace_path = build_workspace_path(
@@ -931,8 +943,12 @@ def sample_serial_workflow_in_db_owned_by_user1(
     session.add(workflow)
     session.commit()
     yield workflow
+    for job in workflow.jobs:
+        session.delete(job)
     for resource in workflow.resources:
         session.delete(resource)
+    for user_workflow in UserWorkflow.query.filter_by(workflow_id=workflow.id_):
+        session.delete(user_workflow)
     session.delete(workflow)
     session.commit()
 
