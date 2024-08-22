@@ -38,7 +38,7 @@ install_requires = [
     "apispec-webframeworks",
     "check-manifest>=0.25,<1",
     "checksumdir>=1.1.4,<1.2",
-    "coverage>=5.0,<6.0",
+    "coverage>=5.0,<8.0",
     "jsonschema>=3.2.0,<4.0",
     "mock>=3.0,<4.0",
     "pika>=0.12.0,<0.13",
