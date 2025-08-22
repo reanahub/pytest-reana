@@ -16,7 +16,6 @@ import os
 import shutil
 from uuid import uuid4
 
-import pkg_resources
 import pytest
 from kombu import Connection, Exchange, Queue
 from kubernetes import client
