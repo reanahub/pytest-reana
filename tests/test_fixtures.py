@@ -8,7 +8,6 @@
 
 """REANA-pytest-Commmons test fixtures."""
 
-
 from __future__ import absolute_import, print_function
 
 import os
@@ -20,13 +19,11 @@ def test_tmp_shared_volume_path_fixture(testdir):
     """Make sure that pytest accepts our fixture."""
 
     # create a temporary pytest test module
-    testdir.makepyfile(
-        """
+    testdir.makepyfile("""
         def test_sth(tmp_shared_volume_path):
             import os
             os.path.exists(tmp_shared_volume_path)
-    """
-    )
+    """)
 
     # run pytest with the following cmd args
     testdir.runpytest()

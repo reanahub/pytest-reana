@@ -8,7 +8,6 @@
 
 """Pytest plugin for REANA."""
 
-
 from .fixtures import (
     ConsumerBase,
     ConsumerBaseOnMessageMock,
