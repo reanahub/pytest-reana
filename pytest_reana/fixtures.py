@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of REANA.
-# Copyright (C) 2018, 2019, 2020, 2021, 2022, 2023 CERN.
+# Copyright (C) 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026 CERN.
 #
 # REANA is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -18,7 +18,6 @@ from uuid import uuid4
 
 import pytest
 from kombu import Connection, Exchange, Queue
-from kubernetes import client
 from mock import Mock, patch
 from reana_commons.consumer import BaseConsumer
 from reana_db.utils import build_workspace_path
@@ -1016,6 +1015,14 @@ def corev1_api_client_with_user_secrets(no_db_user):
 
         Should be used with one of the secret store fixtures.
         """
+        # Importing kubernetes package lazily here in order to avoid declaring
+        # reana-commons[kubernetes] as a hard dependency of pytest-reana, which
+        # would cause circular pip resolution failures.  Components that use
+        # pytest-reana (e.g. reana-server, reana-workflow-controller) already
+        # declare reana-commons[kubernetes] in their own dependencies, so the
+        # kubernetes package is guaranteed to be available at test time.
+        from kubernetes import client
+
         corev1_api_client = Mock()
         metadata = client.V1ObjectMeta(name=f"reana-secretsstore-{no_db_user.id_}")
         metadata.annotations = {"secrets_types": "{}"}
