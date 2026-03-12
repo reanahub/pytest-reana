@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # This file is part of REANA.
-# Copyright (C) 2018, 2020, 2021, 2023, 2024 CERN.
+# Copyright (C) 2018, 2020, 2021, 2023, 2024, 2025 CERN.
 #
 # REANA is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -9,11 +9,31 @@
 set -o errexit
 set -o nounset
 
-check_commitlint () {
+docs_sphinx() {
+    sphinx-build -qnNW docs docs/_build/html
+}
+
+format_black() {
+    black --check .
+}
+
+format_prettier() {
+    prettier -c .
+}
+
+format_shfmt() {
+    shfmt -d .
+}
+
+lint_commitlint() {
     from=${2:-master}
     to=${3:-HEAD}
     pr=${4:-[0-9]+}
-    npx commitlint --from="$from" --to="$to"
+    if command -v commitlint >/dev/null 2>&1; then
+        commitlint --from="$from" --to="$to"
+    else
+        npx commitlint --from="$from" --to="$to"
+    fi
     found=0
     while IFS= read -r line; do
         commit_hash=$(echo "$line" | cut -d ' ' -f 1)
@@ -31,7 +51,7 @@ check_commitlint () {
         # (iii) check absence of merge commits in feature branches
         if [ "$commit_number_of_parents" -gt 1 ]; then
             if echo "$commit_title" | grep -qE "^chore\(.*\): merge "; then
-                break  # skip checking maint-to-master merge commits
+                break # skip checking maint-to-master merge commits
             else
                 echo "✖   Merge commits are not allowed in feature branches: $commit_title"
                 found=1
@@ -43,59 +63,95 @@ check_commitlint () {
     fi
 }
 
-check_shellcheck () {
-    find . -name "*.sh" -exec shellcheck {} \+
-}
-
-check_pydocstyle () {
-    pydocstyle pytest_reana
-}
-
-check_black () {
-    black --check .
-}
-
-check_flake8 () {
+lint_flake8() {
     flake8 .
 }
 
-check_manifest () {
+lint_jsonlint() {
+    find . -name "*.json" -exec jsonlint -q {} \+
+}
+
+lint_manifest() {
     check-manifest
 }
 
-check_sphinx () {
-    sphinx-build -qnNW docs docs/_build/html
+lint_markdownlint() {
+    markdownlint-cli2 "**/*.md"
 }
 
-check_pytest () {
+lint_pydocstyle() {
+    pydocstyle pytest_reana
+}
+
+lint_shellcheck() {
+    find . -name "*.sh" -exec shellcheck {} \+
+}
+
+lint_yamllint() {
+    yamllint .
+}
+
+python_tests() {
     pytest
 }
 
-check_all () {
-    check_commitlint
-    check_shellcheck
-    check_pydocstyle
-    check_black
-    check_flake8
-    check_manifest
-    check_sphinx
-    check_pytest
+all() {
+    docs_sphinx
+    format_black
+    format_prettier
+    format_shfmt
+    lint_commitlint
+    lint_flake8
+    lint_jsonlint
+    lint_manifest
+    lint_markdownlint
+    lint_pydocstyle
+    lint_shellcheck
+    lint_yamllint
+    python_tests
+}
+
+help() {
+    echo "Usage: $0 [options]"
+    echo "Options:"
+    echo "  --all                Perform all checks [default]"
+    echo "  --docs-sphinx        Check Sphinx docs build"
+    echo "  --format-black       Check formatting of Python code"
+    echo "  --format-prettier    Check formatting of Markdown etc files"
+    echo "  --format-shfmt       Check formatting of shell scripts"
+    echo "  --help               Display this help message"
+    echo "  --lint-commitlint    Check linting of commit messages"
+    echo "  --lint-flake8        Check linting of Python code"
+    echo "  --lint-jsonlint      Check linting of JSON files"
+    echo "  --lint-manifest      Check linting of Python manifest"
+    echo "  --lint-markdownlint  Check linting of Markdown files"
+    echo "  --lint-pydocstyle    Check linting of Python docstrings"
+    echo "  --lint-shellcheck    Check linting of shell scripts"
+    echo "  --lint-yamllint      Check linting of YAML files"
+    echo "  --python-tests       Check Python test suite"
 }
 
 if [ $# -eq 0 ]; then
-    check_all
+    all
     exit 0
 fi
 
 arg="$1"
 case $arg in
-    --check-commitlint) check_commitlint "$@";;
-    --check-shellcheck) check_shellcheck;;
-    --check-pydocstyle) check_pydocstyle;;
-    --check-black) check_black;;
-    --check-flake8) check_flake8;;
-    --check-manifest) check_manifest;;
-    --check-sphinx) check_sphinx;;
-    --check-pytest) check_pytest;;
-    *) echo "[ERROR] Invalid argument '$arg'. Exiting." && exit 1;;
+--all) all ;;
+--help) help ;;
+--docs-sphinx) docs_sphinx ;;
+--format-black) format_black ;;
+--format-prettier) format_prettier ;;
+--format-shfmt) format_shfmt ;;
+--lint-commitlint) lint_commitlint "$@" ;;
+--lint-flake8) lint_flake8 ;;
+--lint-jsonlint) lint_jsonlint ;;
+--lint-manifest) lint_manifest ;;
+--lint-markdownlint) lint_markdownlint ;;
+--lint-pydocstyle) lint_pydocstyle ;;
+--lint-shellcheck) lint_shellcheck ;;
+--lint-yamllint) lint_yamllint ;;
+--python-tests) python_tests ;;
+*) echo "[ERROR] Invalid argument '$arg'. Exiting." && help && exit 1 ;;
 esac

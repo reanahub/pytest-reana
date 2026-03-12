@@ -11,8 +11,8 @@
 ## About
 
 pytest-REANA is a component of the [REANA](http://www.reana.io/) reusable and
-reproducible research data analysis platform. It provides pytest fixtures and test
-utilities.
+reproducible research data analysis platform. It provides pytest fixtures and
+test utilities.
 
 ## Features
 

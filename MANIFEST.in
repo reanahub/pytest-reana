@@ -12,7 +12,10 @@ include *.sh
 include *.toml
 include *.yaml
 include .dockerignore
+include .editorconfig
 include .flake8
+include .prettierignore
+include .prettierrc.yaml
 include LICENSE
 include pytest.ini
 include tox.ini
