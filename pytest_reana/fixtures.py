@@ -106,8 +106,10 @@ def app(base_app):
     engine = create_engine(base_app.config["SQLALCHEMY_DATABASE_URI"])
     base_app.session.bind = engine
     with base_app.app_context():
-        if not engine.dialect.has_schema(engine, "__reana"):
-            engine.execute(CreateSchema("__reana"))
+        with engine.connect() as connection:
+            if not engine.dialect.has_schema(connection, "__reana"):
+                with connection.begin():
+                    connection.execute(CreateSchema("__reana"))
         if not database_exists(engine.url):
             create_database(engine.url)
         Base.metadata.create_all(bind=engine)
@@ -141,7 +143,7 @@ def user0(app, session):
     from reana_db.models import User
 
     user0_id = "00000000-0000-0000-0000-000000000000"
-    user = User.query.filter_by(id_=user0_id).first()
+    user = session.query(User).filter_by(id_=user0_id).first()
     if not user:
         with patch("reana_db.database.Session", return_value=session):
             user = User(id_=user0_id, email="user0@reana.io", access_token="user0token")
@@ -174,7 +176,7 @@ def user1(app, session):
     from reana_db.models import User
 
     user1_id = "11111111-1111-1111-1111-111111111111"
-    user = User.query.filter_by(id_=user1_id).first()
+    user = session.query(User).filter_by(id_=user1_id).first()
     if not user:
         with patch("reana_db.database.Session", return_value=session):
             user = User(id_=user1_id, email="user1@reana.io", access_token="user1token")
@@ -207,7 +209,7 @@ def user2(app, session):
     from reana_db.models import User
 
     user2_id = "22222222-2222-2222-2222-222222222222"
-    user = User.query.filter_by(id_=user2_id).first()
+    user = session.query(User).filter_by(id_=user2_id).first()
     if not user:
         with patch("reana_db.database.Session", return_value=session):
             user = User(id_=user2_id, email="user2@reana.io", access_token="user2token")
@@ -810,7 +812,9 @@ def sample_yadage_workflow_in_db(
         session.delete(job)
     for resource in workflow.resources:
         session.delete(resource)
-    for user_workflow in UserWorkflow.query.filter_by(workflow_id=workflow.id_):
+    for user_workflow in session.query(UserWorkflow).filter_by(
+        workflow_id=workflow.id_
+    ):
         session.delete(user_workflow)
     session.delete(workflow)
     session.commit()
@@ -855,7 +859,9 @@ def sample_yadage_workflow_in_db_owned_by_user1(
         session.delete(job)
     for resource in workflow.resources:
         session.delete(resource)
-    for user_workflow in UserWorkflow.query.filter_by(workflow_id=workflow.id_):
+    for user_workflow in session.query(UserWorkflow).filter_by(
+        workflow_id=workflow.id_
+    ):
         session.delete(user_workflow)
     session.delete(workflow)
     session.commit()
@@ -900,7 +906,9 @@ def sample_serial_workflow_in_db(
         session.delete(job)
     for resource in workflow.resources:
         session.delete(resource)
-    for user_workflow in UserWorkflow.query.filter_by(workflow_id=workflow.id_):
+    for user_workflow in session.query(UserWorkflow).filter_by(
+        workflow_id=workflow.id_
+    ):
         session.delete(user_workflow)
     session.delete(workflow)
     session.commit()
@@ -945,7 +953,9 @@ def sample_serial_workflow_in_db_owned_by_user1(
         session.delete(job)
     for resource in workflow.resources:
         session.delete(resource)
-    for user_workflow in UserWorkflow.query.filter_by(workflow_id=workflow.id_):
+    for user_workflow in session.query(UserWorkflow).filter_by(
+        workflow_id=workflow.id_
+    ):
         session.delete(user_workflow)
     session.delete(workflow)
     session.commit()

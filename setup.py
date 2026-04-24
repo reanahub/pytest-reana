@@ -33,8 +33,7 @@ for key, reqs in extras_require.items():
     extras_require["all"].extend(reqs)
 
 install_requires = [
-    # apispec>=4.0 drops support for marshmallow<3
-    "apispec[yaml]>=3.0,<4.0",
+    "apispec[yaml]>=3.0",
     "apispec-webframeworks",
     "check-manifest>=0.25,<1",
     "checksumdir>=1.1.4,<1.2",
