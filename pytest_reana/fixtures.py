@@ -144,7 +144,7 @@ def user0(app, session):
     user0_id = "00000000-0000-0000-0000-000000000000"
     user = session.query(User).filter_by(id_=user0_id).first()
     if not user:
-        with patch("reana_db.database.Session", return_value=session):
+        with patch("reana_db.database.Session", new=session):
             user = User(id_=user0_id, email="user0@reana.io", access_token="user0token")
         session.add(user)
         session.commit()
@@ -177,7 +177,7 @@ def user1(app, session):
     user1_id = "11111111-1111-1111-1111-111111111111"
     user = session.query(User).filter_by(id_=user1_id).first()
     if not user:
-        with patch("reana_db.database.Session", return_value=session):
+        with patch("reana_db.database.Session", new=session):
             user = User(id_=user1_id, email="user1@reana.io", access_token="user1token")
         session.add(user)
         session.commit()
@@ -210,7 +210,7 @@ def user2(app, session):
     user2_id = "22222222-2222-2222-2222-222222222222"
     user = session.query(User).filter_by(id_=user2_id).first()
     if not user:
-        with patch("reana_db.database.Session", return_value=session):
+        with patch("reana_db.database.Session", new=session):
             user = User(id_=user2_id, email="user2@reana.io", access_token="user2token")
         session.add(user)
         session.commit()
