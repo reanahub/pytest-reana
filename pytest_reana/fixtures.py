@@ -106,10 +106,9 @@ def app(base_app):
     engine = create_engine(base_app.config["SQLALCHEMY_DATABASE_URI"])
     base_app.session.bind = engine
     with base_app.app_context():
-        with engine.connect() as connection:
+        with engine.begin() as connection:
             if not engine.dialect.has_schema(connection, "__reana"):
-                with connection.begin():
-                    connection.execute(CreateSchema("__reana"))
+                connection.execute(CreateSchema("__reana"))
         if not database_exists(engine.url):
             create_database(engine.url)
         Base.metadata.create_all(bind=engine)
