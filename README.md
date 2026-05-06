@@ -14,15 +14,28 @@ pytest-REANA is a component of the [REANA](http://www.reana.io/) reusable and
 reproducible research data analysis platform. It provides pytest fixtures and
 test utilities.
 
+> **Deprecated.** Starting with this release, the fixtures and helpers
+> previously shipped here live in the libraries that own them:
+>
+> - REANA-Commons-coupled and pure fixtures, plus `make_mock_api_client`, are
+>   exported from `reana_commons.testing` and auto-loaded via
+>   `reana-commons[tests]`.
+> - Database-coupled fixtures are exported from `reana_db.testing` and
+>   auto-loaded via `reana-db[tests]`.
+>
+> Existing imports from `pytest_reana.fixtures` and `pytest_reana.test_utils`
+> continue to work but emit a `DeprecationWarning`. New projects should depend
+> on `reana-commons[tests]` and/or `reana-db[tests]` instead of `pytest-reana`.
+> The package will be archived once the deprecation cycle ends.
+
 ## Features
 
-- pytest fixtures
+- pytest fixtures (now provided by `reana-commons[tests]` and `reana-db[tests]`)
 - mocking OpenAPI client with request format validation
 - mocking Advanced Message Queuing Protocol consumers and producers
 - mocking Celery tasks
 - mocking file system workspace access
 - mocking database access
-- includes sample workspace directory
 
 ## Usage
 

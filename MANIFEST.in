@@ -25,7 +25,5 @@ recursive-include docs *.png
 recursive-include docs *.py
 recursive-include docs *.md
 recursive-include docs *.txt
-recursive-include pytest_reana *.csv
-recursive-include pytest_reana *.ipynb
 recursive-include pytest_reana *.py
 recursive-include tests *.py
