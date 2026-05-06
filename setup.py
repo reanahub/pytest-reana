@@ -33,21 +33,9 @@ for key, reqs in extras_require.items():
     extras_require["all"].extend(reqs)
 
 install_requires = [
-    "apispec[yaml]>=3.0",
-    "apispec-webframeworks",
-    "check-manifest>=0.25,<1",
-    "checksumdir>=1.1.4,<1.2",
-    "coverage>=5.0,<8.0",
-    "jsonschema>=3.2.0,<4.0",
-    "mock>=3.0,<4.0",
-    "pika>=0.12.0,<0.13",
-    "pydocstyle>=5.0.0,<6.0.0",
-    "pytest-cache>=1.0,<2.0",
-    "pytest-cov>=3.0.0,<4.0",
     "pytest>=7.0.0,<9.0.0",
-    "reana-commons>=0.95.0a15,<0.96.0",
-    "reana-db>=0.95.0a7,<0.96.0",
-    "swagger_spec_validator>=2.1.0",
+    "reana-commons[tests]>=0.95.0a15,<0.96.0",
+    "reana-db[tests]>=0.95.0a8,<0.96.0",
 ]
 packages = find_packages()
 
@@ -94,9 +82,4 @@ setup(
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    entry_points={
-        "pytest11": [
-            "reana = pytest_reana.plugin",
-        ]
-    },
 )

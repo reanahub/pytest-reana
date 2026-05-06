@@ -1,29 +1,27 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of REANA.
-# Copyright (C) 2018, 2020, 2021 CERN.
+# Copyright (C) 2018, 2020, 2021, 2026 CERN.
 #
 # REANA is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
-"""REANA Pytest Commons test utilities."""
 
-from mock import Mock
-from reana_commons.api_client import BaseAPIClient
+"""Deprecated re-export of :func:`make_mock_api_client`.
 
+The helper now lives in :mod:`reana_commons.testing`. Importing it from
+``pytest_reana.test_utils`` still works but is deprecated and will be
+removed in a future release.
+"""
 
-def make_mock_api_client(component):
-    mock_response, mock_http_response = Mock(), Mock()
-    mock_response = {}
-    mock_http_response.status_code = 200
-    mock_http_response.raw_bytes = b"Sample downloaded data"
+from __future__ import absolute_import, print_function
 
-    def mock_api_client(
-        mock_response=mock_response, mock_http_response=mock_http_response
-    ):
-        mock_http_client, mock_result = Mock(), Mock()
-        mock_result.result.return_value = (mock_response, mock_http_response)
-        mock_http_client.request.return_value = mock_result
-        mock_api_client = BaseAPIClient(component, http_client=mock_http_client)
-        return mock_api_client._client
+import warnings
 
-    return mock_api_client
+from reana_commons.testing import make_mock_api_client  # noqa: F401
+
+warnings.warn(
+    "pytest_reana.test_utils is deprecated; import make_mock_api_client "
+    "from reana_commons.testing instead.",
+    DeprecationWarning,
+    stacklevel=2,
+)
